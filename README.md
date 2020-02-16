@@ -13,3 +13,17 @@ For next week:
 - How do we want to implement analytics?
 - How do we combine visualization and analytics?
 
+2020-02-16
+Activities Completed:
+- read the 4 csv files.  Broke the vector column into individual fields and made them pretty
+- subset using test-subset csv (data is big enough to crash laptops)
+- append the title and body table, summarize sentiment and count num posts
+- export as json 
+
+Of note: 
+- it's not easy to trace back to the original reddit post from the data
+- thus difficult to validate by finding the reddit post
+- users table is nice but there's no way to link to the post so its useless
+- subreddits csv has 300 word2vec type columns which may be useful for 
+  clustering algorithms (to find groups of similar subreddits)
+
