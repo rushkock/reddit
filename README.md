@@ -22,8 +22,9 @@ Activities Completed:
 
 2020-02-17
 Activities Completed:
--Found out what all properties of the dataset mean. See the following link: https://www.kovcomp.co.uk/wordstat/LIWC.html
 
+-Found out what all properties of the dataset mean. See the following link: https://www.kovcomp.co.uk/wordstat/LIWC.html
+- Added new file containing some functions to find sentiment
 
 Of note: 
 - it's not easy to trace back to the original reddit post from the data
