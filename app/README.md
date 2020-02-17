@@ -112,15 +112,19 @@ This also counts for links, and scripts.
 # Step by step guide on making a d3 visualization with this application
 ## Make a js script
 In the js folder make a javascript script:
+
+Per example: 
 static/js/practice.js
 
 ## Make an html and css file
 Go to the templates folder and make a new html file.
 Per example imagine you made an html page called practice.html
+
 It will be at:
 templates/practice.html
 
 In the static folder make a css file, the css file will be:
+
 templates/css/practice.css
 
 In the html file copy paste the code to extend layout.html (its above in this readme)
@@ -174,7 +178,7 @@ http://127.0.0.1:5000/practice
 ```
 
 ## Calling your js code
-In the js file make a function
+In the js file you made (static/js/practice.js) make a function:
 
 ```
 function practice(){
