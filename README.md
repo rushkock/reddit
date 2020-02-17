@@ -20,6 +20,11 @@ Activities Completed:
 - append the title and body table, summarize sentiment and count num posts
 - export as json 
 
+2020-02-17
+Activities Completed:
+-Found out what all properties of the dataset mean. See the following link: https://www.kovcomp.co.uk/wordstat/LIWC.html
+
+
 Of note: 
 - it's not easy to trace back to the original reddit post from the data
 - thus difficult to validate by finding the reddit post
