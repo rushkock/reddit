@@ -38,3 +38,6 @@ Of note:
   For example, group 10 is clearly inappropriate subreddits, but the other 9 are not apparent. 
 - bokeh test server set up and simple D3 visual using csv data set up.     
 
+2020-02-23 
+- created file of subreddit groups
+- created csv file of politics, video games, and sports subreddit crossposts
