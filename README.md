@@ -41,3 +41,7 @@ Of note:
 2020-02-23 
 - created file of subreddit groups
 - created csv file of politics, video games, and sports subreddit crossposts
+
+2020-02-24:
+- Created for each subreddit amount of positive and negative posts
+- Added toxicity level for each subreddit
