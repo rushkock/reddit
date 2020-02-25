@@ -45,3 +45,10 @@ Of note:
 2020-02-24:
 - Created for each subreddit amount of positive and negative posts
 - Added toxicity level for each subreddit
+
+2020-02-25
+- Hessel made a better data file with normalized toxicity and more info.
+- Data is extremely imbalanced in that most reddit crossposts are not toxic
+  So, we need to decide if we should focus on the toxic stuff for the visual.
+- Ruchella is working on the visual components and the current 'theme' is chemisty
+- 
