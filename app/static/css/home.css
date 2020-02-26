@@ -1,3 +1,27 @@
 body {
   background-color: #000000;
 }
+
+.dropdown{
+  position: absolute;
+  left: 30px;
+  top: 103px;
+}
+
+.beaker{
+  position: absolute;
+  left:580px;
+  top: 500px;
+}
+
+.test_tube{
+  position: absolute;
+  left:450px;
+  top: 200px;
+}
+
+.water_drop{
+  position: absolute;
+  left: 480px;
+  top: 400px;
+}
