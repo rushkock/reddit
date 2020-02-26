@@ -32,3 +32,23 @@ Of note:
 - subreddits csv has 300 word2vec type columns which may be useful for 
   clustering algorithms (to find groups of similar subreddits)
 
+2020-02-19
+- The 'subreddit' file has 300 columns of word2vec type information.  We clustered this into 10 clusters
+  using kmeans (attempting to get groups of similar subreddits.  The results are not clear.
+  For example, group 10 is clearly inappropriate subreddits, but the other 9 are not apparent. 
+- bokeh test server set up and simple D3 visual using csv data set up.     
+
+2020-02-23 
+- created file of subreddit groups
+- created csv file of politics, video games, and sports subreddit crossposts
+
+2020-02-24:
+- Created for each subreddit amount of positive and negative posts
+- Added toxicity level for each subreddit
+
+2020-02-25
+- Hessel made a better data file with normalized toxicity and more info.
+- Data is extremely imbalanced in that most reddit crossposts are not toxic
+  So, we need to decide if we should focus on the toxic stuff for the visual.
+- Ruchella is working on the visual components and the current 'theme' is chemisty
+- 
