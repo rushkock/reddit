@@ -52,3 +52,7 @@ Of note:
   So, we need to decide if we should focus on the toxic stuff for the visual.
 - Ruchella is working on the visual components and the current 'theme' is chemisty
 - 
+2020-03-01
+-We had some bar graphs in Bokeh showing the toxicity of the selected subreddit towards the target subreddits, however instead of these, a radar graph will be used.
+-Two types of radar graphs were created by Adél in Bokeh. One of those has the target subreddits in the vertices of the 'spider net' and in the other one the toxicity and the positivity indicators are the vertices. On Monday/Tuesday it has to be discussed which one to use. Further data preparation is necessary based on the decision.
+-The chosen bokeh radar graph still has to be implemented to Flask.
