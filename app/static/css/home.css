@@ -1,5 +1,5 @@
 body {
-  background-color: #000000;
+
 }
 
 .dropdown{
@@ -10,18 +10,31 @@ body {
 
 .beaker{
   position: absolute;
-  left:580px;
+  left:800px;
   top: 500px;
 }
 
 .test_tube{
   position: absolute;
-  left:450px;
-  top: 200px;
+  left:620px;
+  top: 150px;
 }
 
 .water_drop{
   position: absolute;
-  left: 480px;
-  top: 400px;
+  left: 750px;
+  top: 420px;
+}
+
+.human{
+  position: absolute;
+  left: 1500px;
+  top: 640px;
+}
+
+
+.round_beaker{
+  position: absolute;
+  left: 1000px;
+  top: 30px;
 }
