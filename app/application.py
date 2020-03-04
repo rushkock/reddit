@@ -8,6 +8,7 @@ import numpy as np
 from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, LabelSet
 
+
 app = Flask(__name__)
 
 

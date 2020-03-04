@@ -26,6 +26,12 @@ body {
   top: 420px;
 }
 
+.pole_1{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
 .human{
   position: absolute;
   left: 1500px;
@@ -41,5 +47,17 @@ body {
 .round_beaker{
   position: absolute;
   left: 1000px;
-  top: 30px;
+  top: 250px;
+}
+
+.legend{
+  position: absolute;
+  left: 1020px;
+  top: 240px;
+}
+
+.background{
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
