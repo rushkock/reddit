@@ -40,13 +40,14 @@ csv_agg['norm_toxicity_ratio'] = csv_agg['norm_toxicity_accum']/csv_agg['total_p
 csv_agg.rename(columns = {"row_count":"source_subreddit_row_count"}, inplace=True)
 
 csv_with_tots = csv_neat.drop(columns='row_count') \
-                        .merge(csv_agg[['source_parent_group','source_child_group', 'source_subreddit','row_count']], \
+                        .merge(csv_agg[['source_parent_group','source_child_group', 'source_subreddit','source_subreddit_row_count']], \
                             left_on = ['source_parent_group','source_child_group', 'source_subreddit'], \
                             right_on = ['source_parent_group','source_child_group', 'source_subreddit'], \
-                            how = "inner").rename(columns = {"row_count":"source_subreddit_row_count"})
+                            how = "inner")
 
+csv_with_tots['toxicity_rank']= 0
 csv_with_tots["toxicity_rank"] = csv_with_tots.groupby(['source_subreddit']) \
                                 ["toxicity_ratio","total_posts"].rank("first", ascending=False)
 
-csv_with_tots.drop(columns = "norm_toxicity_accum").to_csv("source_subreddit_summary.csv",index=False)
-csv_agg.to_csv("source_target_subreddit_stats.csv",index=False)
+csv_with_tots.drop(columns = "norm_toxicity_accum").to_csv("source_target_subreddit_stats.csv",index=False)
+csv_agg.to_csv("source_subreddit_summary.csv",index=False)
