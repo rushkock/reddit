@@ -51,4 +51,7 @@ subreddits_groups['child_group'] = subreddits_groups['child_group'].str.lower()
 subreddits_groups['parent_group'] = subreddits_groups['parent_group'].str.lower()
 subreddits_groups['subreddit'] = subreddits_groups['subreddit'].str.lower()
 
+subreddits_groups.drop_duplicates(subset ="subreddit", 
+                     keep = False, inplace = True) 
+
 subreddits_groups.to_csv("reddit_subreddits_groups.csv", index=False)
