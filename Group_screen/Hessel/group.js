@@ -15,7 +15,7 @@ function renderChartCollapsibleNetwork(params) {
     hiddenChildLevel: 1,
     //hiddenChildLevel: 5,
     nodeStroke: '#41302D',
-    nodeTextColor: '#E5E5E5',
+    nodeTextColor: '#708090',
     linkColor: '#303030',
     activeLinkColor: "blue",
     hoverOpacity: 0.2,
@@ -25,8 +25,6 @@ function renderChartCollapsibleNetwork(params) {
     data: null
   };
 
-
-
   /*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
 
   var attrKeys = Object.keys(attrs);
@@ -35,6 +33,27 @@ function renderChartCollapsibleNetwork(params) {
       attrs[key] = params[key];
     }
   })
+
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  var array = ['atom-icon2.svg', 'atom-icon3.svg'];
 
   //innerFunctions which will update visuals
   var updateData;
@@ -224,10 +243,6 @@ function renderChartCollapsibleNetwork(params) {
           .on('mouseleave', nodeMouseLeave)
           .call(behaviors.drag)
 
-
-
-
-
         //node texts
         enteredNodes.append('text').attr('class', 'node-texts')
           .attr('x', 30).attr('fill', attrs.nodeTextColor)
@@ -235,11 +250,15 @@ function renderChartCollapsibleNetwork(params) {
           .style('display', attrs.textDisplayed ? "initial" : "none")
 
         //channels grandchildren
+        //channels grandchildren
         var channelsGrandchildren = enteredNodes
-          .append("circle")
-          .attr('r', 7)
-          .attr('stroke-width', 5)
-          .attr('stroke', attrs.nodeStroke)
+        .append("image")
+        .attr("xlink:href", "atom-icon3.svg")
+        .attr("x", -15)
+        .attr("y", -15)
+        .attr("width", 27)
+        .attr("height", 27)
+
 
         //merge  node groups and style it
         nodes = enteredNodes.merge(nodes);
@@ -414,8 +433,6 @@ function renderChartCollapsibleNetwork(params) {
 
       }
 
-
-
       //recursively loop on children and extract nodes as an array
       function flatten(root, clustered) {
         var nodesArray = [];
@@ -566,6 +583,7 @@ function renderChartCollapsibleNetwork(params) {
     }
     return main;
   }
+
 
   // run  visual
   main.run = function () {

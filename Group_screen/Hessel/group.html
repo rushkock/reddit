@@ -1,6 +1,11 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script>
+          var d3v5 = window.d3;
+          window.d3 = null;
+        </script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="group.js"></script>
         <style>
@@ -9,6 +14,7 @@
         <title>group_file</title>
     </head>
     <body>
+      <?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <div class="">
           <div id="myGraph"></div>
         </div>
