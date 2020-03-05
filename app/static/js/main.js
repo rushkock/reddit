@@ -3,11 +3,19 @@
 // In this function we call the functions to make the D3 visualizations
 window.onload = function()
 {
-  var requests = [];
+  var requests = [d3v5.csv("../static/data/source_subreddit_summary.csv")];
   Promise.all(requests).then(function(response) {
-     console.log("insert functions calls")
-     move_images()
+     var toxicity = process_data_experiment(response);
+     move_images(toxicity)
   }).catch(function(e) {
       throw(e);
   });
 };
+
+
+function process_data_experiment(data){
+  var subreddit = data[0].find(function(element){
+    return element.source_subreddit === "bestof";
+  });
+  return parseFloat(subreddit.norm_toxicity_ratio);
+}

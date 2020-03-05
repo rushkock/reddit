@@ -22,52 +22,132 @@ function generatePosition(positions_data){
   return [randomPositionx1, randomPositiony1, randomPositionx2, randomPositiony2]
 }
 
+function make_background(){
+  function place_chemical_svg(path, chemical_name){
+    d3v5.xml(path)
+    .then(data => {
+      var div_name = chemical_name;
+      d3v5.select('main').select(".background").append("div").attr("class", div_name);
+      var class_name = "." + div_name;
+      d3v5.select(class_name).node().append(data.documentElement);
+      var svg = d3v5.select(class_name).select('svg')
+      svg.attr("width", 100)
+      .attr("height", 100)
+      // svg repositioning
+      $(class_name).css({top: Math.random() * 1000, left: Math.random() * 2000, position:'absolute'});
+    });
+  }
+  for (i=0;i<3;i++){
+    var div_name = "chemical_1" + i;
+    place_chemical_svg('../static/images/chemical_1.svg', div_name)
+  }
+  for (i=0;i<3;i++){
+    var div_name = "chemical_2" + i;
+    place_chemical_svg('../static/images/chemical_2.svg', div_name)
+  }
+  for (i=0;i<3;i++){
+    var div_name = "chemical_3" + i;
+    place_chemical_svg('../static/images/chemical_3.svg', div_name)
+  }
 
-function move_images(){
-  // height and width of svg
-  var width = 1000;
-  var height = 1000;
+}
 
+function draw_pole(){
+  var svg_pole_1 = d3v5.select('.pole_1')
+  .append('svg')
+  .attr("width", window.innerWidth)
+  .attr("height", 1000)
+  // long rect vertical middle
+  svg_pole_1.append("rect")
+  .attr('width', 10)
+  .attr('height', 950)
+  .attr('x', 1100)
+  .attr('y', 0)
+  .attr("fill", "#c7b7b7")
+  // rect  horizontal left
+  svg_pole_1.append("rect")
+  .attr('width', 400)
+  .attr('height', 10)
+  .attr('x', 700)
+  .attr('y', 90)
+  .attr("fill", "#c7b7b7")
+  // rect  horizontal right
+  svg_pole_1.append("rect")
+  .attr('width', 400)
+  .attr('height', 10)
+  .attr('x', 1110)
+  .attr('y', 230)
+  .attr("fill", "#c7b7b7")
+}
 
-  d3.xml('../static/images/beaker.svg')
+function move_images(toxicity){
+
+  d3v5.xml('../static/images/beaker.svg')
   .then(data => {
-    var beaker = d3.select('.beaker').node().append(data.documentElement)
-    var beaker_svg_1 = d3.select('.beaker').select('svg')
+    var beaker = d3v5.select('.beaker').node().append(data.documentElement)
+    var beaker_svg_1 = d3v5.select('.beaker').select('svg')
     beaker_svg_1
     .attr('width', 300)
     .attr('height', 500)
-    bubbling()
+
   })
 
-  d3.xml('../static/images/human.svg')
+  make_background()
+  draw_pole()
+  background_bubbles()
+
+  d3v5.xml('../static/images/legend.svg')
   .then(data => {
-    var human = d3.select('.human').node().append(data.documentElement)
-    var human_svg_1 = d3.select('.human').select('svg')
+    var legend = d3v5.select('.legend').node().append(data.documentElement)
+    var legend_svg = d3v5.select('.legend').select('svg')
+    legend_svg
+    .attr('width', 200)
+    .attr('height', 250)
+  });
+
+
+
+  d3v5.xml('../static/images/human.svg')
+  .then(data => {
+    var human = d3v5.select('.human').node().append(data.documentElement)
+    var human_svg_1 = d3v5.select('.human').select('svg')
     human_svg_1
     .attr('width', 400)
-    .attr('height', 400)
-
+    .attr('height', 300)
+    .select("g")
+    .selectAll(".human_path").style("fill-opacity", 0)
+    human_svg_1
+    .select("g")
+    .selectAll(".text_bubble").style("fill-opacity", 0)
   })
 
-  d3.xml('../static/images/round_beaker.svg')
+  d3v5.xml('../static/images/round_beaker.svg')
   .then(data => {
-    var round_beaker = d3.select('.round_beaker').node().append(data.documentElement)
-    var round_beaker_svg_1 = d3.select('.round_beaker').select('svg')
+    var round_beaker = d3v5.select('.round_beaker').node().append(data.documentElement)
+    var round_beaker_svg_1 = d3v5.select('.round_beaker').select('svg')
     round_beaker_svg_1
     .attr('width', 600)
     .attr('height', 600)
   })
 
-  d3.xml('../static/images/test_tube.svg')
+
+
+
+  d3v5.xml('../static/images/test_tube.svg')
   .then(data => {
-    var test_tube = d3.select('.test_tube').node().append(data.documentElement)
-    var test_tube_svg = d3.select('.test_tube').select('svg')
+    var test_tube = d3v5.select('.test_tube').node().append(data.documentElement)
+    var test_tube_svg = d3v5.select('.test_tube').select('svg')
     test_tube_svg
     .attr('width', 300)
     .attr('height', 500)
 
+    var color = d3v5.scaleLinear()
+    .domain([0.2, 0.3, 0.4, 0.5])
+    .range(['#d73027', '#d73027',  '#a6d96a', '#66bd63', '#1a9850']);
 
-    var t = d3.transition()
+    //var color = d3v5.scaleSequential(d3v5.interpolateRdYlGn);
+
+    var t = d3v5.transition()
 
     t.on("start", function() {
       // rotate test tube
@@ -88,10 +168,11 @@ function move_images(){
                 test_tube_svg.selectAll(".test_tube4").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
                   t7 = test_tube_svg.selectAll(".test_tube7").transition().duration(600).style("fill-opacity", 1)
                   test_tube_svg.selectAll(".test_tube5").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                    d3.xml('../static/images/water_drop.svg').then(data => {
-                      var water_drop = d3.select('.water_drop').node().append(data.documentElement)
-                      var water_drop_svg = d3.select('.water_drop').select('svg')
-                      water_drop_svg
+
+                    d3v5.xml('../static/images/water_drop.svg').then(data => {
+                      var water_drop = d3v5.select('.water_drop').node().append(data.documentElement)
+                      var water_drop_svg = d3v5.select('.water_drop').select('svg')
+                      var transition_1 = water_drop_svg
                       .attr('width', 500)
                       .attr('height', 500)
                       .transition()
@@ -108,11 +189,82 @@ function move_images(){
                         .transition()
                         .duration(400)
                         .style("fill-opacity", 0)
-                        .style("")
                       })
-                      d3.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", "#93d422")
-                      d3.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", "#628e16")
-                      d3.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", "#84b927")
+
+
+                      var transition_2 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.6)
+                      var transition_3 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);})
+                      var transition_4 = d3v5.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.8)
+
+                      var transition_5 = d3v5.transition().delay(1000).on("start", bubbling)
+
+                      var human_transition = d3v5.transition()
+                      .delay(5000)
+
+                      d3v5.select(".human").select("svg").transition(human_transition)
+                      .selectAll(".human_path").style("fill-opacity", 1)
+                      var text_bubble = d3v5.select(".human").select("svg").transition(human_transition).selectAll(".text_bubble")
+                      text_bubble.style("fill-opacity", 1)
+
+
+                      d3v5.select(".human").select("svg").append("text")
+                      .transition(human_transition)
+                      .attr("x", 10)
+                      .attr("y", 20)
+                      .attr("dy", ".15em")
+                      .text(function(d) { return "This subreddit "; });
+
+                      d3v5.select(".human").select("svg").append("text")
+                      .transition(human_transition)
+                      .duration(800)
+                      .attr("x", 5)
+                      .attr("y", 40)
+                      .attr("dy", ".15em")
+                      .text(function(d) { return "has a toxicity of" });
+
+                      d3v5.select(".human").select("svg").append("text")
+                      .transition(human_transition)
+                      .duration(1000)
+                      .attr("x", 50)
+                      .attr("y", 60)
+                      .attr("dy", ".15em")
+                      .text(function(d) { return toxicity.toFixed(2) * 100 + " %"; });
+
+                      list_of_transitions = [transition_1, transition_2, transition_3, transition_4, transition_5, human_transition]
+                      return Promise.all(list_of_transitions)
+
+                    }).then(function(){
+                      var test_tube_svg = d3v5.select('.test_tube').select('svg')
+                      var t = d3v5.transition()
+                      .delay(2000)
+
+                      t.on("start", function() {
+                        // rotate test tube
+                        test_tube_svg.transition().duration(8000).attr('transform', 'rotate(0)')
+                      })
+
+
+                      test_tube_svg.selectAll(".test_tube6").transition(t).duration(600).style("fill-opacity", 1)
+                      test_tube_svg.selectAll(".test_tube7").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                        t3 = test_tube_svg.selectAll(".test_tube5").transition().duration(600).style("fill-opacity", 1)
+                        test_tube_svg.selectAll(".test_tube6").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                          t4 = test_tube_svg.selectAll(".test_tube4").transition().duration(600).style("fill-opacity", 1)
+                          test_tube_svg.selectAll(".test_tube5").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                            t5 = test_tube_svg.selectAll(".test_tube3").transition().duration(600).style("fill-opacity", 1)
+                            test_tube_svg.selectAll(".test_tube4").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                              t6 = test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 1)
+                              test_tube_svg.selectAll(".test_tube3").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                                t7 = test_tube_svg.selectAll(".test_tube1").transition().duration(600).style("fill-opacity", 1)
+                                test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 0).end().then(function(){
+                                  test_tube_svg.selectAll(".test_tube0").transition().duration(300).style("fill-opacity", 1).end().then(function(){
+                                    test_tube_svg.selectAll(".test_tube1").transition().duration(300).style("fill-opacity", 0)
+                                  })
+                                })
+                              })
+                            })
+                          })
+                        })
+                      })
 
 
                     })
@@ -133,8 +285,7 @@ function move_images(){
 
 function make_circles(){
   // this function creates the idea of dropping water from the beaker
-  console.log("called this function")
-  var svg = d3.select('.water_drop').select('svg')
+  var svg = d3v5.select('.water_drop').select('svg')
   var defs = svg.append('defs');
   var filter = defs.append('filter').attr('id','gooey');
   filter.append('feGaussianBlur')
@@ -155,7 +306,7 @@ function make_circles(){
   //Create the circles that will move out and in the center circle
   var steps = 5;
   svg.selectAll(".flyCircle")
-  .data(d3.range(steps).map(function(num) {
+  .data(d3v5.range(steps).map(function(num) {
     return (steps)*(2*Math.PI); }))
     .enter()
     .append("circle")
@@ -169,10 +320,10 @@ function make_circles(){
     //Continuously moves the circles outward
     function update() {
       //Create scale
-      var xScale = d3.scaleLinear()
+      var xScale = d3v5.scaleLinear()
       .domain([-1.5, 1.5])
       .range([-10, 10]);
-      var circle = d3.selectAll(".flyCircle");
+      var circle = d3v5.selectAll(".flyCircle");
       var dur = 1500,
       del = 500;
 
@@ -204,15 +355,14 @@ function make_circles(){
     };
 
     // Scale for radius
-    var xr_1 = d3.scaleLinear().domain([0, 100]).range([0, 40]);
+    var xr_1 = d3v5.scaleLinear().domain([0, 100]).range([0, 40]);
 
     var positions_data_0 = {
-      minx1:120, maxx1:80, miny1:80, maxy1:180,
-      minx2:150, maxx2:50, miny2:150, maxy2:250
+      minx1:60, maxx1:160, miny1:150, maxy1:250
     }
     var positions_data = generatePosition(positions_data_0)
     // SVG viewport
-    var svg = d3.select('.beaker').select("svg");
+    var svg = d3v5.select('.beaker').select("svg");
 
     var baseCircle1 = svg.selectAll("circle.circle1")
     .data(data)
@@ -226,70 +376,137 @@ function make_circles(){
     .attr("stroke-width", 2)
     .style('stroke', tcColours[randomTcColour()])
 
-    var update = function(positions, xr) {
+    var update = function(positions, xr, opacity, fill) {
       var baseCircle1 = svg.selectAll('circle.circle1');
 
       var transition_1 = baseCircle1
       .transition()
-      .duration(1000)
+      .duration(500)
       .attr('r', xr)
       .attr('cx', positions[0])
       .attr('cy', positions[1])
-      .attr('fill', tcColours[randomTcColour()])
+      .attr('fill', fill)
       .attr("stroke-width", 2)
-      .style('stroke', tcColours[randomTcColour()])
+      .style('stroke', fill)
+      .style("fill-opacity", opacity)
       .end();
-
-      console.log("Hi I am in updte")
 
       return Promise.race([transition_1]);
     }
 
     // Scale for radius
-    var xr_1 = d3.scaleLinear().domain([0, 100]).range([0, 40]);
+    var xr_1 = d3v5.scaleLinear().domain([0, 100]).range([0, 40]);
 
     var positions_data_0 = {
-      minx1:120, maxx1:80, miny1:80, maxy1:180,
-      minx2:150, maxx2:50, miny2:150, maxy2:250
+      minx1:60, maxx1:160, miny1:150, maxy1:250
     }
     var positions_0 = generatePosition(positions_data_0)
+    var opacity_0 = 0.5
+    var fill_0 = '#FDBB30'
 
     var positions_data_1 = {
-      minx1:120, maxx1:80, miny1:100, maxy1:200,
-      minx2:150, maxx2:50, miny2:100, maxy2:150
+      minx1:120, maxx1:80, miny1:100, maxy1:200, opacity:0.3, color:'#FDBB30'
     }
     var positions_1 = generatePosition(positions_data_1)
-
+    var opacity_1 = 0.3
+    var fill_1 = '#93d422'
 
     // Scale for radius
-    var xr_2 = d3.scaleLinear().domain([0, 100]).range([0, 20]);
+    var xr_2 = d3v5.scaleLinear().domain([0, 100]).range([0, 20]);
 
     var positions_data_2 = {
-      minx1:120, maxx1:60, miny1:0, maxy1:100,
-      minx2:120, maxx2:60, miny2:0, maxy2:150
+      minx1:100, maxx1:80, miny1:0, maxy1:100
     }
     var positions_2 = generatePosition(positions_data_2)
+    var opacity_2 = 0.1
+    var fill_2 = '#93d422'
 
-    var transitions = update(positions_0, xr_1)
-    console.log(transitions)
+    var transitions = update(positions_0, xr_1, opacity_0, fill_0)
 
     transitions.then(function(){
-      data = data.concat([1])
-
-      console.log("first then")
-      var update_function = update(positions_0, xr_1)
-        console.log(update_function)
+      var update_function = update(positions_0, xr_1, opacity_0, fill_0)
       transitions_list = []
-      for (var j=0; j<10; j++){
+      for (var j=0; j<2; j++){
         update_function = update_function.then(function(){
-        return update(positions_0, xr_1)});
-        transitions_list.push(update_function);
+          return update(positions_0, xr_1,  opacity_0, fill_0)});
+          transitions_list.push(update_function);
+        }
+        return Promise.all(transitions_list);
+      }).catch(function(error){console.log(error);}).then(function(){
+        var update_function = update(positions_1, xr_1,  opacity_1, fill_1)
+        transitions_list = []
+        for (var j=0; j<2; j++){
+          update_function = update_function.then(function(){
+            return update(positions_1, xr_1, opacity_1, fill_1)});
+            transitions_list.push(update_function);
+          }
+          return Promise.all(transitions_list);
+        }).then(function(){
+          var update_function = update(positions_2, xr_2,  opacity_2, fill_2)
+          transitions_list = []
+          for (var j=0; j<2; j++){
+            update_function = update_function.then(function(){
+              return update(positions_2, xr_2,  opacity_2, fill_2)});
+              transitions_list.push(update_function);
+            }
+            return Promise.all(transitions_list);
+          }).then(function(){
+            d3v5.select('.beaker').select("svg").selectAll("circle.circle1").transition().duration(500).style("opacity", 0)
+          }
+        )
+
       }
-      return Promise.all(transitions_list);
-    }).catch(function(error){console.log(error);}).then(function(){
-      console.log("last then")
-    })
+
+      function background_bubbles(){
+        // create data
+        var data = [];
+        var data_1 = []
+        for (var i=0; i < 8; i++) {
+          data.push(i);
+          data_1.push(i);
+        }
+
+        // Scale for radius
+        var xr = d3v5.scaleLinear().domain([0, 100]).range([0, 150]);
+        var color_0 = ['#FDBB30'];
+        var positions_data_0 = {
+          minx1:800, maxx1:1000, miny1:0, maxy1:500
+        }
+        var positions_data = generatePosition(positions_data_0)
+        // SVG viewport
+        var svg = d3v5.select('.background').append('svg').attr("width", window.innerWidth)
+        .attr("height", 1000);
+        function make_circles(positions_data, data, color){
+          var baseCircle1 = svg.selectAll("circle.circle1")
+                                .data(data)
+                                .enter()
+                                .append('circle')
+                                .attr("class", "circle1")
+                                .attr('r', xr)
+                                .attr('cx', positions_data[0])
+                                .attr('cy', positions_data[1])
+                                .attr('fill', color)
+                                .style('stroke', "none")
+                                .style("fill-opacity", 0.5)
+        }
+
+        make_circles(positions_data, data, color_0)
+
+        var color_1 = ['#c2b0ee'];
+        var positions_data_1 = {
+          minx1:1200, maxx1:1400, miny1:0, maxy1:300
+        }
+        data = data.concat(data_1)
+        var positions_data_1 = generatePosition(positions_data_1)
+        make_circles(positions_data_1, data, color_1)
 
 
-    //setInterval(function(){ update(positions_0, xr_1) }, 500);
-  }
+        var color_2 = ['#d178b7'];
+        var positions_data_2 = {
+          minx1:600, maxx1:800, miny1:0, maxy1:200
+        }
+        var positions_data_2 = generatePosition(positions_data_2)
+        data = data.concat(data_1)
+        make_circles(positions_data_2, data, color_2)
+
+      }

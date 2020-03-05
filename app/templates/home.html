@@ -13,35 +13,55 @@ Home
 
 <!-- stylesheets-->
 <link rel="stylesheet" href="../static/css/home.css">
+<link rel="stylesheet" href="../static/css/group.css">
 
 <!-- D3 links -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3-legend/1.1.0/d3-legend.js"></script>
 
-
+<script src="https://d3js.org/d3.v5.js"></script>
+<script>
+    var d3v5 = window.d3;
+    window.d3 = null;
+</script>
+<script src="https://d3js.org/d3.v4.js"></script>
 <!-- JS script for charts
 <script src="/static/js/topojson.js"></script>
 
 <script src="../static/js/pie_chart.js"></script>
 -->
-
-<div class="dropdown">
-  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Choose a subreddit
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Donald</a>
-    <a class="dropdown-item" href="#">Hillary</a>
-    <a class="dropdown-item" href="#">Democrats</a>
-  </div>
-</div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-widgets.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.js"></script>
 <script src="../static/js/main.js"></script>
 <script src="../static/js/home.js"></script>
+<script src="../static/js/group.js"></script>
+
+
+<div class="background"></div>
 <div class="cauldron"></div>
 <div class="test_tube"></div>
 <div class="beaker"></div>
 <div class="water_drop"></div>
 <div class="round_beaker"></div>
 <div class="human"></div>
+<div class="pole_1"></div>
+<div class="legend"></div>
+
+<div id="myGraph"></div>
+<script>
+  d3.json('../static/json/data.json', data => {
+    networkChart = renderChartCollapsibleNetwork()
+    .svgHeight(1000)
+    .svgWidth(500)
+    .container('#myGraph')
+    .data({ root: data })
+    .debug(true)
+    .run()
+  })
+</script>
+
+{{ div|safe }}
+{{ script|safe }}
+<div class=radar_chart></div>
 {% endblock %}
