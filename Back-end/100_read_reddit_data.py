@@ -209,5 +209,66 @@ csv_with_tots["toxicity_rank"] = csv_with_tots.groupby(['source_subreddit']) \
 csv_with_tots.drop(columns = "norm_toxicity_accum") \
     .to_csv("source_target_subreddit_stats.csv",index=False)
 
-csv_agg2.to_csv("source_subreddit_summary.csv",index=False)
+csv_agg_parent = csv_agg2.groupby(['source_parent_group']) \
+       .agg({'total_posts':pd.Series.sum, 
+             'negative_posts':pd.Series.sum, 
+             'positive_posts':pd.Series.sum,
+             'norm_toxicity_accum':pd.Series.sum, 
+             'source_subreddit_row_count':pd.Series.sum, 
+             'toxicity_ratio':pd.Series.mean,
+             'norm_toxicity_ratio':pd.Series.mean, 
+             'neg_sentiment_vader':pd.Series.mean, 
+             'liwc_negemo':pd.Series.mean, 
+             'liwc_anx':pd.Series.mean,
+             'liwc_anger':pd.Series.mean, 
+             'liwc_sad':pd.Series.mean, 
+             'liwc_swear':pd.Series.mean}).reset_index()
+
+csv_agg_child = csv_agg2.groupby(['source_parent_group','source_child_group']) \
+       .agg({'total_posts':pd.Series.sum, 
+             'negative_posts':pd.Series.sum, 
+             'positive_posts':pd.Series.sum,
+             'norm_toxicity_accum':pd.Series.sum, 
+             'source_subreddit_row_count':pd.Series.sum, 
+             'toxicity_ratio':pd.Series.mean,
+             'norm_toxicity_ratio':pd.Series.mean, 
+             'neg_sentiment_vader':pd.Series.mean, 
+             'liwc_negemo':pd.Series.mean, 
+             'liwc_anx':pd.Series.mean,
+             'liwc_anger':pd.Series.mean, 
+             'liwc_sad':pd.Series.mean, 
+             'liwc_swear':pd.Series.mean}).reset_index()
+
+csv_agg_bs = csv_agg2
+csv_agg_bs["bs"] = 'bs'
+
+csv_agg_all = csv_agg_bs.groupby(['bs']) \
+       .agg({'total_posts':pd.Series.sum, 
+             'negative_posts':pd.Series.sum, 
+             'positive_posts':pd.Series.sum,
+             'norm_toxicity_accum':pd.Series.sum, 
+             'source_subreddit_row_count':pd.Series.sum, 
+             'toxicity_ratio':pd.Series.mean,
+             'norm_toxicity_ratio':pd.Series.mean, 
+             'neg_sentiment_vader':pd.Series.mean, 
+             'liwc_negemo':pd.Series.mean, 
+             'liwc_anx':pd.Series.mean,
+             'liwc_anger':pd.Series.mean, 
+             'liwc_sad':pd.Series.mean, 
+             'liwc_swear':pd.Series.mean}).reset_index()
+
+csv_agg_all.drop(columns='bs',inplace=True)
+csv_agg2.drop(columns='bs',inplace=True)
+
+csv_all_aggs = csv_agg_all.append(csv_agg_parent.append(csv_agg_child.append(csv_agg2)))
+
+csv_all_aggs_neat = csv_all_aggs[csv_agg2.columns]
+
+csv_all_aggs_neat = csv_all_aggs_neat.reset_index(drop=True)
+
+csv_all_aggs_neat.insert(loc=0, column='agg_level', value= 4)
+
+csv_all_aggs_neat['agg_level']=csv_all_aggs_neat.isnull().sum(axis = 1)
+
+csv_all_aggs_neat.to_csv("source_subreddit_summary.csv",index=False)
 
