@@ -34,7 +34,7 @@ function renderChartCollapsibleNetwork(params) {
     }
   })
 
-  var atomarray = ['atom-icon-filled1.svg', 'atom-icon-filled2.svg', 'atom-icon-filled3.svg', 'atom-icon-filled4.svg', 'atom-icon-filled5.svg', 'atom-icon-filled6.svg', 'atom-icon-filled7.svg'];
+  var atomarray = ['../atoms/atom-icon-filled1.svg', '../atoms/atom-icon-filled2.svg', '../atoms/atom-icon-filled3.svg', '../atoms/atom-icon-filled4.svg', '../atoms/atom-icon-filled5.svg', '../atoms/atom-icon-filled6.svg', '../atoms/atom-icon-filled7.svg', '../atoms/atom-icon-filled8.svg'];
 
   //innerFunctions which will update visuals
   var updateData;
@@ -218,7 +218,6 @@ function renderChartCollapsibleNetwork(params) {
         var enteredNodes = nodes.enter()
           .append('g')
           .attr('class', 'node')
-          console.log(nodes)
 
         //bind event handlers
         enteredNodes.on('click', nodeClick)
