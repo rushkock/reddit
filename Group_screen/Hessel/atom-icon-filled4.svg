@@ -25,12 +25,20 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs819">
+    <linearGradient
+       id="linearGradient2331"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#4db5ff;stop-opacity:1;"
+         offset="0"
+         id="stop2329" />
+    </linearGradient>
     <linearGradient
        id="linearGradient2513"
        osb:paint="solid">
@@ -85,22 +93,23 @@
      inkscape:window-height="1046"
      id="namedview817"
      showgrid="false"
-     inkscape:zoom="2.967548"
-     inkscape:cx="211.28554"
-     inkscape:cy="126.35804"
+     inkscape:zoom="1.8101934"
+     inkscape:cx="216.72149"
+     inkscape:cy="53.741351"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg815" />
+     inkscape:current-layer="svg815"
+     showguides="false" />
   <ellipse
-     style="fill:#4db5ff;fill-opacity:1;stroke:#4db6ff;stroke-width:4.71794844;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056274"
+     style="fill:#94fb2f;fill-opacity:1;stroke:#92fa30;stroke-width:4.71794844;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.56521738"
      id="path2475"
      ry="117.41503"
      rx="117.75201"
      cy="119.774"
      cx="120.11098" />
   <ellipse
-     style="fill:none;fill-opacity:1;stroke:#d40082;stroke-width:4.55781746;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056274"
+     style="fill:none;fill-opacity:1;stroke:#040003;stroke-width:4.55781746;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056277"
      id="path2475-3-9"
      ry="84.503479"
      rx="29.762825"
@@ -108,7 +117,7 @@
      cx="-39.680534"
      transform="matrix(0.55440681,-0.83224581,0.86369017,0.5040231,0,0)" />
   <ellipse
-     style="fill:none;fill-opacity:1;stroke:#d40082;stroke-width:4.55781746;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056274"
+     style="fill:none;fill-opacity:1;stroke:#0b0007;stroke-width:4.55781746;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056277"
      id="path2475-3-9-0"
      ry="84.503479"
      rx="29.762825"
@@ -116,7 +125,7 @@
      cx="121.81912"
      transform="matrix(0.99709776,0.07613182,-0.01680524,0.99985878,0,0)" />
   <ellipse
-     style="fill:none;fill-opacity:1;stroke:#d50080;stroke-width:4.55835199;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056274"
+     style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:4.55835199;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.77056277"
      id="path2475-3-9-0-7"
      ry="84.503479"
      rx="29.762825"
@@ -124,21 +133,21 @@
      cx="163.77672"
      transform="matrix(0.43727701,0.89932687,-0.87178201,0.48989399,0,0)" />
   <ellipse
-     style="fill:#ff89f3;fill-opacity:1;stroke:#ff89f2;stroke-width:5.06420708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#dadada;fill-opacity:1;stroke:#dadada;stroke-width:5.06420708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path2667"
      cx="136.28593"
      cy="49.850967"
      rx="9.0119715"
      ry="8.5065041" />
   <ellipse
-     style="fill:#ff89f3;fill-opacity:1;stroke:#ff89f3;stroke-width:5.06420708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#dadada;fill-opacity:1;stroke:#dadada;stroke-width:5.06420708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path2667-2"
      cx="52.54678"
      cy="140.16122"
      rx="9.0119715"
      ry="8.5065041" />
   <ellipse
-     style="fill:#ff89f3;fill-opacity:1;stroke:#ff89f3;stroke-width:5.06420708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#dadada;fill-opacity:1;stroke:#dadada;stroke-width:5.06420708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path2667-7"
      cx="172.17416"
      cy="165.09761"
