@@ -34,26 +34,7 @@ function renderChartCollapsibleNetwork(params) {
     }
   })
 
-  function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
-
-  var array = ['atom-icon2.svg', 'atom-icon3.svg'];
+  var atomarray = ['atom-icon-filled1.svg', 'atom-icon-filled2.svg', 'atom-icon-filled3.svg', 'atom-icon-filled4.svg', 'atom-icon-filled5.svg', 'atom-icon-filled6.svg', 'atom-icon-filled7.svg'];
 
   //innerFunctions which will update visuals
   var updateData;
@@ -91,6 +72,7 @@ function renderChartCollapsibleNetwork(params) {
       force.link = d3.forceLink().id(d => d.id);
       force.charge = d3.forceManyBody()
       force.center = d3.forceCenter(calc.chartWidth / 2, calc.chartHeight / 2)
+
 
       // prevent collide
       force.collide = d3.forceCollide().radius(d => {
@@ -250,14 +232,13 @@ function renderChartCollapsibleNetwork(params) {
           .style('display', attrs.textDisplayed ? "initial" : "none")
 
         //channels grandchildren
-        //channels grandchildren
         var channelsGrandchildren = enteredNodes
         .append("image")
-        .attr("xlink:href", "atom-icon3.svg")
+        .attr("xlink:href", atomarray[Math.floor(Math.random() * atomarray.length)])
         .attr("x", -15)
         .attr("y", -15)
-        .attr("width", 27)
-        .attr("height", 27)
+        .attr("width", 40)
+        .attr("height", 40)
 
 
         //merge  node groups and style it
@@ -398,8 +379,7 @@ function renderChartCollapsibleNetwork(params) {
               }
               else {
                 d.children = d._children;
-                d._children = null;
-              }
+                d._children = null;              }
               if (d.parent && d.children) { //add here,
                 d.parent.children.forEach(function(element) {
               if (d !== element) {
