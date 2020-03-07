@@ -1,3 +1,75 @@
+function move_images(toxicity, animation){
+
+
+  d3v5.xml('../static/images/beaker.svg')
+  .then(data => {
+    var beaker = d3v5.select('.beaker').node().append(data.documentElement)
+    var beaker_svg_1 = d3v5.select('.beaker').select('svg')
+    beaker_svg_1
+    .attr('width', 300)
+    .attr('height', 500)
+
+  })
+
+  make_background()
+  draw_pole()
+  background_bubbles()
+
+  d3v5.xml('../static/images/legend.svg')
+  .then(data => {
+    var legend = d3v5.select('.legend').node().append(data.documentElement)
+    var legend_svg = d3v5.select('.legend').select('svg')
+    legend_svg
+    .attr('width', 200)
+    .attr('height', 250)
+  });
+
+
+
+  d3v5.xml('../static/images/human.svg')
+  .then(data => {
+    var human = d3v5.select('.human').node().append(data.documentElement)
+    var human_svg_1 = d3v5.select('.human').select('svg')
+    human_svg_1
+    .attr('width', 400)
+    .attr('height', 300)
+    .select("g")
+    .selectAll(".human_path").style("fill-opacity", 0)
+    human_svg_1
+    .select("g")
+    .selectAll(".text_bubble").style("fill-opacity", 0)
+  })
+
+  d3v5.xml('../static/images/round_beaker.svg')
+  .then(data => {
+    var round_beaker = d3v5.select('.round_beaker').node().append(data.documentElement)
+    var round_beaker_svg_1 = d3v5.select('.round_beaker').select('svg')
+    round_beaker_svg_1
+    .attr('width', 600)
+    .attr('height', 600)
+  })
+  d3v5.xml('../static/images/test_tube.svg')
+  .then(data => {
+    var test_tube = d3v5.select('.test_tube').node().append(data.documentElement)
+    var test_tube_svg = d3v5.select('.test_tube').select('svg')
+    test_tube_svg
+    .attr('width', 300)
+    .attr('height', 500)
+  })
+
+  if (animation === "test_tube"){
+    test_tube_transition(toxicity)
+  }
+  else if (animation === "round_beaker"){
+    animate_round_beaker(toxicity)
+  }
+  else{
+    animate_round_beaker_2(toxicity)
+  }
+
+}
+
+
 function generatePosition(positions_data){
   // Top circles
   var randomPositionx1 = function(d) {
@@ -52,6 +124,201 @@ function make_background(){
 
 }
 
+function animate_round_beaker_2(toxicity){
+  var svg = d3v5.select('.pole_1').select('svg');
+  svg.append('rect')
+  .attr('width', 10)
+  .attr('x',1335)
+  .attr('y', 230)
+  .attr("fill", "#c7b7b7")
+  .attr('class', 'tube_rect_right')
+  .transition()
+  .duration(1000)
+  .attr('height', 230)
+  svg.append('rect')
+  .attr('width', 10)
+  .attr('x', 930)
+  .attr('y', 230)
+  .attr('fill', '#c7b7b7')
+  .attr('class', 'tube_rect_left')
+  .transition()
+  .duration(2000)
+  .attr('height', 230)
+  svg.append('rect')
+  .attr('height', 10)
+  .attr('x', 930)
+  .attr('y', 230)
+  .attr('fill', '#c7b7b7')
+  .attr('class', 'tube_rect_left')
+  .transition()
+  .duration(2000)
+  .attr('width', 200)
+  .end().then(function(){
+    function circles_round_beaker(delay){
+
+      var svg = d3v5.select('.pole_1').select('svg');
+      var transitions = svg.append('circle')
+      .attr('r', 7)
+      .attr('cx', 1340)
+      .attr('cy', 460)
+      .attr('fill', '#927acb')
+      .transition()
+      .delay(delay)
+      .duration(500)
+      .attr('cy', 235)
+      .transition()
+      .duration(500)
+      .attr('cx', 935)
+      .transition()
+      .duration(500)
+      .attr('cy', 750)
+      .transition()
+      .duration(500)
+      .attr('opacity', 0)
+      .end();
+
+      return transitions;
+    }
+    var list_round_beaker_transitions = []
+    for (i=0;i<10;i++){
+      delay = i * 500
+      var transition = circles_round_beaker(delay)
+      list_round_beaker_transitions.push(transition)
+    }
+    var color = d3v5.scaleLinear()
+    .domain([0.2, 0.3, 0.4, 0.5])
+    .range(['#d73027', '#d73027',  '#a6d96a', '#66bd63', '#1a9850']);
+
+    var transition_2 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.6)
+    var transition_3 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);})
+    var transition_4 = d3v5.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.8)
+
+    var transition_5 = d3v5.transition().delay(1000).on("start", bubbling)
+
+    var human_transition = d3v5.transition()
+    .delay(5000)
+
+    d3v5.select(".human").select("svg").transition(human_transition)
+    .selectAll(".human_path").style("fill-opacity", 1)
+    var text_bubble = d3v5.select(".human").select("svg").transition(human_transition).selectAll(".text_bubble")
+    text_bubble.style("fill-opacity", 1)
+
+
+    d3v5.select(".human").select("svg").append("text")
+    .transition(human_transition)
+    .attr("x", 10)
+    .attr("y", 20)
+    .attr("dy", ".15em")
+    .text(function(d) { return "This subreddit "; });
+
+    d3v5.select(".human").select("svg").append("text")
+    .transition(human_transition)
+    .duration(800)
+    .attr("x", 5)
+    .attr("y", 40)
+    .attr("dy", ".15em")
+    .text(function(d) { return "has a toxicity of" });
+
+    d3v5.select(".human").select("svg").append("text")
+    .transition(human_transition)
+    .duration(1000)
+    .attr("x", 50)
+    .attr("y", 60)
+    .attr("dy", ".15em")
+    .text(function(d) { return toxicity.toFixed(2) * 100 + " %"; });
+
+    return Promise.all(list_round_beaker_transitions)
+  }).then(function(){
+    var transition_1 = d3v5.select('.pole_1').select('svg').selectAll('.tube_rect_left')
+    .transition()
+    .duration(500)
+    .attr('height',0)
+    .end()
+    var transition_2 = d3v5.select('.pole_1').select('svg').select('.tube_rect_right')
+    .transition()
+    .duration(500)
+    .attr('height',0)
+    .end()
+
+
+    return Promise.all([transition_1, transition_2])
+  })
+}
+
+function animate_round_beaker(toxicity){
+  var svg = d3v5.select('.pole_1').select('svg');
+  svg.append('rect')
+  .attr('width', 10)
+  .attr('x',1335)
+  .attr('y', 230)
+  .attr("fill", "#c7b7b7")
+  .attr('class', 'tube_rect_right')
+  .transition()
+  .duration(1000)
+  .attr('height', 230)
+  svg.append('rect')
+  .attr('width', 10)
+  .attr('x', 750)
+  .attr('y', 95)
+  .attr('fill', '#c7b7b7')
+  .attr('class', 'tube_rect_left')
+  .transition()
+  .duration(2000)
+  .attr('height', 230)
+  .end().then(function(){
+    function circles_round_beaker(delay){
+
+      var svg = d3v5.select('.pole_1').select('svg');
+      var transitions = svg.append('circle')
+      .attr('r', 7)
+      .attr('cx', 1340)
+      .attr('cy', 460)
+      .attr('fill', '#927acb')
+      .transition()
+      .delay(delay)
+      .duration(500)
+      .attr('cy', 235)
+      .transition()
+      .duration(500)
+      .attr('cx', 1105)
+      .transition()
+      .duration(500)
+      .attr('cy', 95)
+      .transition()
+      .duration(500)
+      .attr('cx', 755)
+      .transition()
+      .duration(500)
+      .attr('cy', 330)
+      .transition()
+      .attr('fill-opacity',0)
+      .end()
+      return transitions
+    }
+    var list_round_beaker_transitions = []
+    for (i=0;i<10;i++){
+      delay = i * 500
+      var transition = circles_round_beaker(delay)
+      list_round_beaker_transitions.push(transition)
+    }
+    return Promise.all(list_round_beaker_transitions)
+  }).then(function(){
+    var transition_1 = d3v5.select('.pole_1').select('svg').select('.tube_rect_left')
+    .transition()
+    .duration(500)
+    .attr('height',0)
+    .end()
+    var transition_2 = d3v5.select('.pole_1').select('svg').select('.tube_rect_right')
+    .transition()
+    .duration(500)
+    .attr('height',0)
+    .end()
+    return Promise.all([transition_1, transition_2])
+  }).then(function(){
+    test_tube_transition(toxicity)
+  })
+}
+
 function draw_pole(){
   var svg_pole_1 = d3v5.select('.pole_1')
   .append('svg')
@@ -78,208 +345,6 @@ function draw_pole(){
   .attr('x', 1110)
   .attr('y', 230)
   .attr("fill", "#c7b7b7")
-}
-
-function move_images(toxicity){
-
-  d3v5.xml('../static/images/beaker.svg')
-  .then(data => {
-    var beaker = d3v5.select('.beaker').node().append(data.documentElement)
-    var beaker_svg_1 = d3v5.select('.beaker').select('svg')
-    beaker_svg_1
-    .attr('width', 300)
-    .attr('height', 500)
-
-  })
-
-  make_background()
-  draw_pole()
-  background_bubbles()
-
-  d3v5.xml('../static/images/legend.svg')
-  .then(data => {
-    var legend = d3v5.select('.legend').node().append(data.documentElement)
-    var legend_svg = d3v5.select('.legend').select('svg')
-    legend_svg
-    .attr('width', 200)
-    .attr('height', 250)
-  });
-
-
-
-  d3v5.xml('../static/images/human.svg')
-  .then(data => {
-    var human = d3v5.select('.human').node().append(data.documentElement)
-    var human_svg_1 = d3v5.select('.human').select('svg')
-    human_svg_1
-    .attr('width', 400)
-    .attr('height', 300)
-    .select("g")
-    .selectAll(".human_path").style("fill-opacity", 0)
-    human_svg_1
-    .select("g")
-    .selectAll(".text_bubble").style("fill-opacity", 0)
-  })
-
-  d3v5.xml('../static/images/round_beaker.svg')
-  .then(data => {
-    var round_beaker = d3v5.select('.round_beaker').node().append(data.documentElement)
-    var round_beaker_svg_1 = d3v5.select('.round_beaker').select('svg')
-    round_beaker_svg_1
-    .attr('width', 600)
-    .attr('height', 600)
-  })
-
-
-
-
-  d3v5.xml('../static/images/test_tube.svg')
-  .then(data => {
-    var test_tube = d3v5.select('.test_tube').node().append(data.documentElement)
-    var test_tube_svg = d3v5.select('.test_tube').select('svg')
-    test_tube_svg
-    .attr('width', 300)
-    .attr('height', 500)
-
-    var color = d3v5.scaleLinear()
-    .domain([0.2, 0.3, 0.4, 0.5])
-    .range(['#d73027', '#d73027',  '#a6d96a', '#66bd63', '#1a9850']);
-
-    //var color = d3v5.scaleSequential(d3v5.interpolateRdYlGn);
-
-    var t = d3v5.transition()
-
-    t.on("start", function() {
-      // rotate test tube
-      test_tube_svg.transition().duration(8000).attr('transform', 'rotate(100)')
-      // show the change in tube water
-      test_tube_svg.selectAll(".test_tube1").transition().duration(500).style("fill-opacity", 1)
-      // remove the previous water
-      test_tube_svg.selectAll(".test_tube0").transition().duration(500).style("fill-opacity", 0).end().then(function(){
-        test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 1)
-        test_tube_svg.selectAll(".test_tube1").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-          t3 = test_tube_svg.selectAll(".test_tube3").transition().duration(600).style("fill-opacity", 1)
-          test_tube_svg.selectAll(".test_tube1").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-            t4 = test_tube_svg.selectAll(".test_tube4").transition().duration(600).style("fill-opacity", 1)
-            test_tube_svg.selectAll(".test_tube2").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-              t5 = test_tube_svg.selectAll(".test_tube5").transition().duration(600).style("fill-opacity", 1)
-              test_tube_svg.selectAll(".test_tube3").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                t6 = test_tube_svg.selectAll(".test_tube6").transition().duration(600).style("fill-opacity", 1)
-                test_tube_svg.selectAll(".test_tube4").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                  t7 = test_tube_svg.selectAll(".test_tube7").transition().duration(600).style("fill-opacity", 1)
-                  test_tube_svg.selectAll(".test_tube5").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-
-                    d3v5.xml('../static/images/water_drop.svg').then(data => {
-                      var water_drop = d3v5.select('.water_drop').node().append(data.documentElement)
-                      var water_drop_svg = d3v5.select('.water_drop').select('svg')
-                      var transition_1 = water_drop_svg
-                      .attr('width', 500)
-                      .attr('height', 500)
-                      .transition()
-                      .on("start", function(){
-                        make_circles()
-                      })
-                      .on("end", function(){
-                        water_drop_svg
-                        .transition()
-                        .delay(3500)
-                        .duration(1000)
-                        .attr("transform", "translate(0,255)")
-                        .select('.water')
-                        .transition()
-                        .duration(400)
-                        .style("fill-opacity", 0)
-                      })
-
-
-                      var transition_2 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.6)
-                      var transition_3 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);})
-                      var transition_4 = d3v5.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.8)
-
-                      var transition_5 = d3v5.transition().delay(1000).on("start", bubbling)
-
-                      var human_transition = d3v5.transition()
-                      .delay(5000)
-
-                      d3v5.select(".human").select("svg").transition(human_transition)
-                      .selectAll(".human_path").style("fill-opacity", 1)
-                      var text_bubble = d3v5.select(".human").select("svg").transition(human_transition).selectAll(".text_bubble")
-                      text_bubble.style("fill-opacity", 1)
-
-
-                      d3v5.select(".human").select("svg").append("text")
-                      .transition(human_transition)
-                      .attr("x", 10)
-                      .attr("y", 20)
-                      .attr("dy", ".15em")
-                      .text(function(d) { return "This subreddit "; });
-
-                      d3v5.select(".human").select("svg").append("text")
-                      .transition(human_transition)
-                      .duration(800)
-                      .attr("x", 5)
-                      .attr("y", 40)
-                      .attr("dy", ".15em")
-                      .text(function(d) { return "has a toxicity of" });
-
-                      d3v5.select(".human").select("svg").append("text")
-                      .transition(human_transition)
-                      .duration(1000)
-                      .attr("x", 50)
-                      .attr("y", 60)
-                      .attr("dy", ".15em")
-                      .text(function(d) { return toxicity.toFixed(2) * 100 + " %"; });
-
-                      list_of_transitions = [transition_1, transition_2, transition_3, transition_4, transition_5, human_transition]
-                      return Promise.all(list_of_transitions)
-
-                    }).then(function(){
-                      var test_tube_svg = d3v5.select('.test_tube').select('svg')
-                      var t = d3v5.transition()
-                      .delay(2000)
-
-                      t.on("start", function() {
-                        // rotate test tube
-                        test_tube_svg.transition().duration(8000).attr('transform', 'rotate(0)')
-                      })
-
-
-                      test_tube_svg.selectAll(".test_tube6").transition(t).duration(600).style("fill-opacity", 1)
-                      test_tube_svg.selectAll(".test_tube7").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                        t3 = test_tube_svg.selectAll(".test_tube5").transition().duration(600).style("fill-opacity", 1)
-                        test_tube_svg.selectAll(".test_tube6").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                          t4 = test_tube_svg.selectAll(".test_tube4").transition().duration(600).style("fill-opacity", 1)
-                          test_tube_svg.selectAll(".test_tube5").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                            t5 = test_tube_svg.selectAll(".test_tube3").transition().duration(600).style("fill-opacity", 1)
-                            test_tube_svg.selectAll(".test_tube4").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                              t6 = test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 1)
-                              test_tube_svg.selectAll(".test_tube3").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
-                                t7 = test_tube_svg.selectAll(".test_tube1").transition().duration(600).style("fill-opacity", 1)
-                                test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 0).end().then(function(){
-                                  test_tube_svg.selectAll(".test_tube0").transition().duration(300).style("fill-opacity", 1).end().then(function(){
-                                    test_tube_svg.selectAll(".test_tube1").transition().duration(300).style("fill-opacity", 0)
-                                  })
-                                })
-                              })
-                            })
-                          })
-                        })
-                      })
-
-
-                    })
-                  })
-                })
-              })
-            })
-          })
-        })
-      })
-    })
-  })
-
-
-
 }
 
 
@@ -478,16 +543,16 @@ function make_circles(){
         .attr("height", 1000);
         function make_circles(positions_data, data, color){
           var baseCircle1 = svg.selectAll("circle.circle1")
-                                .data(data)
-                                .enter()
-                                .append('circle')
-                                .attr("class", "circle1")
-                                .attr('r', xr)
-                                .attr('cx', positions_data[0])
-                                .attr('cy', positions_data[1])
-                                .attr('fill', color)
-                                .style('stroke', "none")
-                                .style("fill-opacity", 0.5)
+          .data(data)
+          .enter()
+          .append('circle')
+          .attr("class", "circle1")
+          .attr('r', xr)
+          .attr('cx', positions_data[0])
+          .attr('cy', positions_data[1])
+          .attr('fill', color)
+          .style('stroke', "none")
+          .style("fill-opacity", 0.5)
         }
 
         make_circles(positions_data, data, color_0)
@@ -509,4 +574,149 @@ function make_circles(){
         data = data.concat(data_1)
         make_circles(positions_data_2, data, color_2)
 
+      }
+
+      function test_tube_transition(toxicity){
+        var test_tube_svg = d3v5.select('.test_tube').select('svg')
+        test_tube_svg
+        .attr('width', 300)
+        .attr('height', 500)
+
+        var color = d3v5.scaleLinear()
+        .domain([0.2, 0.3, 0.4, 0.5])
+        .range(['#d73027', '#d73027',  '#a6d96a', '#66bd63', '#1a9850']);
+
+        //var color = d3v5.scaleSequential(d3v5.interpolateRdYlGn);
+        function test_tube_transition(){
+
+        }
+        var t = d3v5.transition()
+
+        t.on("start", function() {
+          // rotate test tube
+          test_tube_svg.transition().duration(8000).attr('transform', 'rotate(100)')
+          // show the change in tube water
+          test_tube_svg.selectAll(".test_tube1").transition().duration(500).style("fill-opacity", 1)
+          // remove the previous water
+          test_tube_svg.selectAll(".test_tube0").transition().duration(500).style("fill-opacity", 0).end().then(function(){
+            test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 1)
+            test_tube_svg.selectAll(".test_tube1").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+              t3 = test_tube_svg.selectAll(".test_tube3").transition().duration(600).style("fill-opacity", 1)
+              test_tube_svg.selectAll(".test_tube1").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                t4 = test_tube_svg.selectAll(".test_tube4").transition().duration(600).style("fill-opacity", 1)
+                test_tube_svg.selectAll(".test_tube2").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                  t5 = test_tube_svg.selectAll(".test_tube5").transition().duration(600).style("fill-opacity", 1)
+                  test_tube_svg.selectAll(".test_tube3").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                    t6 = test_tube_svg.selectAll(".test_tube6").transition().duration(600).style("fill-opacity", 1)
+                    test_tube_svg.selectAll(".test_tube4").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                      t7 = test_tube_svg.selectAll(".test_tube7").transition().duration(600).style("fill-opacity", 1)
+                      test_tube_svg.selectAll(".test_tube5").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+
+                        d3v5.xml('../static/images/water_drop.svg').then(data => {
+                          var water_drop = d3v5.select('.water_drop').node().append(data.documentElement)
+                          var water_drop_svg = d3v5.select('.water_drop').select('svg')
+                          var transition_1 = water_drop_svg
+                          .attr('width', 500)
+                          .attr('height', 500)
+                          .transition()
+                          .on("start", function(){
+                            make_circles()
+                          })
+                          .on("end", function(){
+                            water_drop_svg
+                            .transition()
+                            .delay(3500)
+                            .duration(1000)
+                            .attr("transform", "translate(0,255)")
+                            .select('.water')
+                            .transition()
+                            .duration(400)
+                            .style("fill-opacity", 0)
+                          })
+
+
+                          var transition_2 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.6)
+                          var transition_3 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);})
+                          var transition_4 = d3v5.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.8)
+
+                          var transition_5 = d3v5.transition().delay(1000).on("start", bubbling)
+
+                          var human_transition = d3v5.transition()
+                          .delay(5000)
+
+                          d3v5.select(".human").select("svg").transition(human_transition)
+                          .selectAll(".human_path").style("fill-opacity", 1)
+                          var text_bubble = d3v5.select(".human").select("svg").transition(human_transition).selectAll(".text_bubble")
+                          text_bubble.style("fill-opacity", 1)
+
+
+                          d3v5.select(".human").select("svg").append("text")
+                          .transition(human_transition)
+                          .attr("x", 10)
+                          .attr("y", 20)
+                          .attr("dy", ".15em")
+                          .text(function(d) { return "This subreddit "; });
+
+                          d3v5.select(".human").select("svg").append("text")
+                          .transition(human_transition)
+                          .duration(800)
+                          .attr("x", 5)
+                          .attr("y", 40)
+                          .attr("dy", ".15em")
+                          .text(function(d) { return "has a toxicity of" });
+
+                          d3v5.select(".human").select("svg").append("text")
+                          .transition(human_transition)
+                          .duration(1000)
+                          .attr("x", 50)
+                          .attr("y", 60)
+                          .attr("dy", ".15em")
+                          .text(function(d) { return toxicity.toFixed(2) * 100 + " %"; });
+
+                          list_of_transitions = [transition_1, transition_2, transition_3, transition_4, transition_5, human_transition]
+                          return Promise.all(list_of_transitions)
+
+                        }).then(function(){
+                          var test_tube_svg = d3v5.select('.test_tube').select('svg')
+                          var t = d3v5.transition()
+                          .delay(2000)
+
+                          t.on("start", function() {
+                            // rotate test tube
+                            test_tube_svg.transition().duration(8000).attr('transform', 'rotate(0)')
+                          })
+
+
+                          test_tube_svg.selectAll(".test_tube6").transition(t).duration(600).style("fill-opacity", 1)
+                          test_tube_svg.selectAll(".test_tube7").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                            t3 = test_tube_svg.selectAll(".test_tube5").transition().duration(600).style("fill-opacity", 1)
+                            test_tube_svg.selectAll(".test_tube6").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                              t4 = test_tube_svg.selectAll(".test_tube4").transition().duration(600).style("fill-opacity", 1)
+                              test_tube_svg.selectAll(".test_tube5").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                                t5 = test_tube_svg.selectAll(".test_tube3").transition().duration(600).style("fill-opacity", 1)
+                                test_tube_svg.selectAll(".test_tube4").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                                  t6 = test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 1)
+                                  test_tube_svg.selectAll(".test_tube3").transition().duration(1000).style("fill-opacity", 0).end().then(function(){
+                                    t7 = test_tube_svg.selectAll(".test_tube1").transition().duration(600).style("fill-opacity", 1)
+                                    test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 0).end().then(function(){
+                                      test_tube_svg.selectAll(".test_tube0").transition().duration(300).style("fill-opacity", 1).end().then(function(){
+                                        test_tube_svg.selectAll(".test_tube1").transition().duration(300).style("fill-opacity", 0)
+                                      })
+                                    })
+                                  })
+                                })
+                              })
+                            })
+                          })
+
+
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
       }
