@@ -3,8 +3,8 @@ function renderChartCollapsibleNetwork(params) {
   // exposed variables
   var attrs = {
     id: 'id' + Math.floor(Math.random() * 1000000),
-    svgWidth: 400,
-    svgHeight: 400,
+    svgWidth: 960,
+    svgHeight: 600,
     marginTop: 0,
     marginBottom: 5,
     marginRight: 0,
@@ -15,7 +15,7 @@ function renderChartCollapsibleNetwork(params) {
     hiddenChildLevel: 1,
     //hiddenChildLevel: 5,
     nodeStroke: '#41302D',
-    nodeTextColor: '#E5E5E5',
+    nodeTextColor: '#708090',
     linkColor: '#303030',
     activeLinkColor: "blue",
     hoverOpacity: 0.2,
@@ -25,8 +25,6 @@ function renderChartCollapsibleNetwork(params) {
     data: null
   };
 
-
-
   /*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
 
   var attrKeys = Object.keys(attrs);
@@ -35,6 +33,27 @@ function renderChartCollapsibleNetwork(params) {
       attrs[key] = params[key];
     }
   })
+
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  var array = ['../static/images/atom-icon2.svg', '../static/images/atom-icon3.svg'];
 
   //innerFunctions which will update visuals
   var updateData;
@@ -224,10 +243,6 @@ function renderChartCollapsibleNetwork(params) {
           .on('mouseleave', nodeMouseLeave)
           .call(behaviors.drag)
 
-
-
-
-
         //node texts
         enteredNodes.append('text').attr('class', 'node-texts')
           .attr('x', 30).attr('fill', attrs.nodeTextColor)
@@ -235,11 +250,15 @@ function renderChartCollapsibleNetwork(params) {
           .style('display', attrs.textDisplayed ? "initial" : "none")
 
         //channels grandchildren
+        //channels grandchildren
         var channelsGrandchildren = enteredNodes
-          .append("circle")
-          .attr('r', 7)
-          .attr('stroke-width', 5)
-          .attr('stroke', attrs.nodeStroke)
+        .append("image")
+        .attr("xlink:href", "../static/images/atom-icon3.svg")
+        .attr("x", -15)
+        .attr("y", -15)
+        .attr("width", 27)
+        .attr("height", 27)
+
 
         //merge  node groups and style it
         nodes = enteredNodes.merge(nodes);
@@ -373,17 +392,35 @@ function renderChartCollapsibleNetwork(params) {
 
       // --------------- handle node click event ---------------
       function nodeClick(d) {
+
               if (d.children) {
+                console.log("first")
+                console.log(d.children)
                 d._children = d.children;
                 d.children = null;
               }
               else {
+                if (!d._children){
+                  console.log(d.data.name)
+  
+                  $('.background').empty();
+                  $('.cauldron').empty();
+                  $('.test_tube').empty();
+                  $('.beaker').empty();
+                  $('.water_drop').empty();
+                  $('.round_beaker').empty();
+                  $('.human').empty();
+                  $('.pole_1').empty();
+                  $('.legend').empty();
+                  start_animation(d.data.name)
+                }
                 d.children = d._children;
                 d._children = null;
               }
               if (d.parent && d.children) { //add here,
                 d.parent.children.forEach(function(element) {
               if (d !== element) {
+
               collapse(element);
               }});
             }
@@ -413,8 +450,6 @@ function renderChartCollapsibleNetwork(params) {
         return [Math.sin(corner) * r, -Math.cos(corner) * r]
 
       }
-
-
 
       //recursively loop on children and extract nodes as an array
       function flatten(root, clustered) {
@@ -566,6 +601,7 @@ function renderChartCollapsibleNetwork(params) {
     }
     return main;
   }
+
 
   // run  visual
   main.run = function () {
