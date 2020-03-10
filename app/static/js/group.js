@@ -14,10 +14,10 @@ function renderChartCollapsibleNetwork(params) {
     distance: 1000,
     hiddenChildLevel: 1,
     //hiddenChildLevel: 5,
-    nodeStroke: '#41302D',
-    nodeTextColor: '#708090',
-    linkColor: '#303030',
-    activeLinkColor: "blue",
+    nodeStroke: '#641e16',
+    nodeTextColor: '#17202a',
+    linkColor: '#1f618d',
+    activeLinkColor: "#cb4335",
     hoverOpacity: 0.2,
     maxTextDisplayZoomLevel: 1,
     textDisplayed: true,
@@ -34,26 +34,10 @@ function renderChartCollapsibleNetwork(params) {
     }
   })
 
-  function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
-
-  var array = ['../static/images/atom-icon2.svg', '../static/images/atom-icon3.svg'];
+  var atomarray = ['../static/images/atoms/atom-icon-filled1.svg', '../static/images/atoms/atom-icon-filled2.svg',
+  '../static/images/atoms/atom-icon-filled3.svg', '../static/images/atoms/atom-icon-filled4.svg', 
+  '../static/images/atoms/atom-icon-filled5.svg', '../static/images/atoms/atom-icon-filled6.svg',
+  '../static/images/atoms/atom-icon-filled7.svg', '../static/images/atoms/atom-icon-filled8.svg'];
 
   //innerFunctions which will update visuals
   var updateData;
@@ -89,8 +73,9 @@ function renderChartCollapsibleNetwork(params) {
       //###########################   FORCE STUFF #########################
       var force = {};
       force.link = d3.forceLink().id(d => d.id);
-      force.charge = d3.forceManyBody()
+      force.charge = d3.forceManyBody().strength(-700)
       force.center = d3.forceCenter(calc.chartWidth / 2, calc.chartHeight / 2)
+
 
       // prevent collide
       force.collide = d3.forceCollide().radius(d => {
@@ -218,6 +203,7 @@ function renderChartCollapsibleNetwork(params) {
           if (clickedNode && clickedNode.id == (d.parent && d.parent.id)) {
             d.x = d.parent.x;
             d.y = d.parent.y;
+
           }
         });
 
@@ -249,15 +235,24 @@ function renderChartCollapsibleNetwork(params) {
           .text(d => d.data.name)
           .style('display', attrs.textDisplayed ? "initial" : "none")
 
-        //channels grandchildren
+
         //channels grandchildren
         var channelsGrandchildren = enteredNodes
         .append("image")
-        .attr("xlink:href", "../static/images/atom-icon3.svg")
+        .attr("xlink:href", atomarray[Math.floor(Math.random() * atomarray.length)])
         .attr("x", -15)
         .attr("y", -15)
-        .attr("width", 27)
-        .attr("height", 27)
+        .attr("width", 40)
+        .attr("height", 40)
+
+        var makeborder = enteredNodes
+          .append("circle")
+          .attr("cx", 5.0)
+          .attr("cy", 4)
+          .attr("r", 18.5)
+          .style("fill", "transparent")
+          .style("stroke", "black")
+          .style("stroke-width", "1px")
 
 
         //merge  node groups and style it
@@ -393,39 +388,40 @@ function renderChartCollapsibleNetwork(params) {
       // --------------- handle node click event ---------------
       function nodeClick(d) {
 
-              if (d.children) {
-                console.log("first")
-                console.log(d.children)
-                d._children = d.children;
-                d.children = null;
-              }
-              else {
-                if (!d._children){
-                  console.log(d.data.name)
-  
-                  $('.background').empty();
-                  $('.cauldron').empty();
-                  $('.test_tube').empty();
-                  $('.beaker').empty();
-                  $('.water_drop').empty();
-                  $('.round_beaker').empty();
-                  $('.human').empty();
-                  $('.pole_1').empty();
-                  $('.legend').empty();
-                  start_animation(d.data.name)
-                }
-                d.children = d._children;
-                d._children = null;
-              }
-              if (d.parent && d.children) { //add here,
-                d.parent.children.forEach(function(element) {
-              if (d !== element) {
+                    if (d.children) {
+                      console.log("first")
+                      console.log(d.children)
+                      d._children = d.children;
+                      d.children = null;
+                    }
+                    else {
+                      if (!d._children){
+                        console.log(d.data.name)
+                        $('.radarChart').empty();
+                        $('.background').empty();
+                        $('.cauldron').empty();
+                        $('.test_tube').empty();
+                        $('.beaker').empty();
+                        $('.water_drop').empty();
+                        $('.round_beaker').empty();
+                        $('.human').empty();
+                        $('.pole_1').empty();
+                        $('.legend').empty();
+                        start_animation(d.data.name)
+                      }
+                      d.children = d._children;
+                      d._children = null;
+                    }
+                    if (d.parent && d.children) { //add here,
+                      d.parent.children.forEach(function(element) {
+                    if (d !== element) {
 
-              collapse(element);
-              }});
-            }
-              update(d);
-            }
+                    collapse(element);
+                    }});
+                  }
+                    update(d);
+                  }
+
 
       //#########################################  UTIL FUNCS ##################################
       updateData = function () {

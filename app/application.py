@@ -105,8 +105,4 @@ def radar_graph(subreddit):
 
 @app.route('/')
 def index():
-    plot = radar_graph('the_donald')
-    script, div = components(plot)
-    kwargs = {'script': script, 'div': div}
-    kwargs['title'] = 'bokeh-with-flask'
-    return render_template('home.html', **kwargs)
+    return render_template('home.html')

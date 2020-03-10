@@ -36,7 +36,7 @@ Home
 <script src="../static/js/main.js"></script>
 <script src="../static/js/home.js"></script>
 <script src="../static/js/group.js"></script>
-
+<script src="../static/js/radarChart.js"></script>
 
 <div class="background"></div>
 <div class="cauldron"></div>
@@ -53,7 +53,7 @@ Home
   d3.json('../static/json/data.json', data => {
     networkChart = renderChartCollapsibleNetwork()
     .svgHeight(1000)
-    .svgWidth(500)
+    .svgWidth(700)
     .container('#myGraph')
     .data({ root: data })
     .debug(true)
@@ -63,5 +63,7 @@ Home
 
 {{ div|safe }}
 {{ script|safe }}
-<div class=radar_chart></div>
+
+<div class="radarChart" style="display: inline-flex;"></div>
+
 {% endblock %}
