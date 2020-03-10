@@ -35,7 +35,7 @@ function renderChartCollapsibleNetwork(params) {
   })
 
   var atomarray = ['../static/images/atoms/atom-icon-filled1.svg', '../static/images/atoms/atom-icon-filled2.svg',
-  '../static/images/atoms/atom-icon-filled3.svg', '../static/images/atoms/atom-icon-filled4.svg', 
+  '../static/images/atoms/atom-icon-filled3.svg', '../static/images/atoms/atom-icon-filled4.svg',
   '../static/images/atoms/atom-icon-filled5.svg', '../static/images/atoms/atom-icon-filled6.svg',
   '../static/images/atoms/atom-icon-filled7.svg', '../static/images/atoms/atom-icon-filled8.svg'];
 
@@ -397,6 +397,7 @@ function renderChartCollapsibleNetwork(params) {
                     else {
                       if (!d._children){
                         console.log(d.data.name)
+                        /**
                         $('.radarChart').empty();
                         $('.background').empty();
                         $('.cauldron').empty();
@@ -408,6 +409,7 @@ function renderChartCollapsibleNetwork(params) {
                         $('.pole_1').empty();
                         $('.legend').empty();
                         start_animation(d.data.name)
+                        **/
                       }
                       d.children = d._children;
                       d._children = null;
