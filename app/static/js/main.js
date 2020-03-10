@@ -57,7 +57,9 @@ function process_radar_data(data, subreddit){
       sub_index = data[i];
     }
   }
-  selectedData = [sub_index]
+  selectedData = [sub_index, data[0]]
+  console.log(selectedData);
+  console.log(data)
   if (sub_index === 0){
     selectedData = [data[sub_index]]
   }
