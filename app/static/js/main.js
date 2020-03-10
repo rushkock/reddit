@@ -48,15 +48,13 @@ function draw_radarChart(subreddit){
 
 function process_radar_data(data, subreddit){
   data = data[0]
-
   var sub_index = 0;
   for (let i = 0; i < data.length; i++){
     if (data[i].key === subreddit){
       sub_index = data[i];
     }
   }
-
-  selectedData = [data, sub_index]
+  selectedData = [sub_index]
   if (sub_index === 0){
     selectedData = [data[sub_index]]
   }
