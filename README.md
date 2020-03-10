@@ -57,3 +57,22 @@ Of note:
 - We had some bar graphs in Bokeh showing the toxicity of the selected subreddit towards the target subreddits, however instead of these, a radar graph will be used.
 - Two types of radar graphs were created by Adél in Bokeh. One of those has the target subreddits in the vertices of the 'spider net' and in the other one the toxicity and the positivity indicators are the vertices. On Monday/Tuesday it has to be discussed which one to use. Further data preparation is necessary based on the decision.
 - The chosen bokeh radar graph still has to be implemented to Flask.
+
+2020-03-05 - Midterm evaluation
+- how to guide the user so that they understand the app flow: use multiple dynamic components that use movement to guide the user
+- Toxicity is just one thing we an be brewing
+- Using dynamic movement to capture the users attention.  Movement.
+
+2020-03-10
+- We had some struggles getting bokeh and d3 to integrate cleanly and began some work to see
+  if using entirely d3 is easier.  We implemented a similar radar graph in d3 and intend to cut
+  the bokeh cord.
+- data changes - aggregation of data by subreddit hierarchy, inclusion of sentiment fields to make the 
+  radar chart more meaningful.
+- data issues - sentiment "vader" fields are on a different scale than "LIWC" data.  Will investigate using
+  other LIWC fields for radar chart.  
+  
+
+
+
+
