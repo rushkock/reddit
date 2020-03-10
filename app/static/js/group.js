@@ -15,7 +15,7 @@ function renderChartCollapsibleNetwork(params) {
     hiddenChildLevel: 1,
     //hiddenChildLevel: 5,
     nodeStroke: '#641e16',
-    nodeTextColor: '#17202a',
+    nodeTextColor: '#fffff0',
     linkColor: '#1f618d',
     activeLinkColor: "#cb4335",
     hoverOpacity: 0.2,
@@ -24,6 +24,7 @@ function renderChartCollapsibleNetwork(params) {
     lineStrokeWidth: 1.5,
     data: null
   };
+
 
   /*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
 
@@ -57,6 +58,7 @@ function renderChartCollapsibleNetwork(params) {
       //########################## HIERARCHY STUFF  #########################
       var hierarchy = {};
       hierarchy.root = d3.hierarchy(attrs.data.root);
+      console.log(attrs.data.root)
 
 
       //###########################   BEHAVIORS #########################
@@ -235,11 +237,10 @@ function renderChartCollapsibleNetwork(params) {
           .text(d => d.data.name)
           .style('display', attrs.textDisplayed ? "initial" : "none")
 
-
         //channels grandchildren
         var channelsGrandchildren = enteredNodes
         .append("image")
-        .attr("xlink:href", atomarray[Math.floor(Math.random() * atomarray.length)])
+        .attr("xlink:href",  function(d) { return d.data.link;})
         .attr("x", -15)
         .attr("y", -15)
         .attr("width", 40)
@@ -251,7 +252,7 @@ function renderChartCollapsibleNetwork(params) {
           .attr("cy", 4)
           .attr("r", 18.5)
           .style("fill", "transparent")
-          .style("stroke", "black")
+          .style("stroke", "white")
           .style("stroke-width", "1px")
 
 

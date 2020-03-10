@@ -81,9 +81,9 @@ reddit_posts_colvec.columns = map(str.lower, reddit_posts_colvec.columns)
 reddit_posts_colvec.columns = reddit_posts_colvec.columns.str.replace(' ', '')
 
 
-reddit_posts_colvec_ss = reddit_posts_colvec[['neg_sentiment_vader', 'liwc_negemo', \
-                                              'liwc_anx', 'liwc_anger', 'liwc_sad',  \
-                                              'liwc_swear']]
+reddit_posts_colvec_ss = reddit_posts_colvec[['pos_sentiment_vader', 'compnd_sentiment_vader','neg_sentiment_vader', \
+                                              'liwc_negemo', 'liwc_anx', 'liwc_anger', \
+                                              'liwc_sad',  'liwc_swear', 'liwc_money','liwc_relig','liwc_death']]
 glen = reddit_posts_colvec_ss.head()
 
 # stitch the original dataframe with the column names
@@ -123,12 +123,20 @@ reddit_posts_agg2 = reddit_posts_all. \
              ,"source_child_group"
              ,"source_subreddit"
              ]) \
-    .agg({"neg_sentiment_vader":pd.Series.mean,
+    .agg({
+          "pos_sentiment_vader":pd.Series.mean,
+          "compnd_sentiment_vader":pd.Series.mean,
+          "neg_sentiment_vader":pd.Series.mean,
           "liwc_negemo":pd.Series.mean,
           "liwc_anx":pd.Series.mean,
           "liwc_anger":pd.Series.mean,
           "liwc_sad":pd.Series.mean,
-          "liwc_swear":pd.Series.mean
+          "liwc_swear":pd.Series.mean,
+          'liwc_sad':pd.Series.mean,  
+          'liwc_swear':pd.Series.mean, 
+          'liwc_money':pd.Series.mean,
+          'liwc_relig':pd.Series.mean,
+          'liwc_death':pd.Series.mean
           }).reset_index()
           
 glen = reddit_posts_agg2.query("source_subreddit=='bestoflegaladvice'")
@@ -157,7 +165,8 @@ reddit_posts_ct['norm_toxicity_ratio'] = reddit_posts_ct['toxicity_ratio'] / red
 
 reddit_posts_ct.to_csv("reddit_subreddit_totals.csv",index=False)
 
-
+# OK this half of the program was done post-hoc on hessel's file
+# which is why the naming switches over to csv
 
 
 csv_rename = reddit_posts_ct.rename(columns=
@@ -199,16 +208,17 @@ csv_with_tots = csv_neat.drop(columns='row_count') \
                             right_on = ['source_parent_group','source_child_group', 'source_subreddit'], \
                             how = "inner")
 
-# i dont know why i need to initialize the field to make it work but this works
+# i dont know why i need to initialize the field to make th rank statement work but this works
 csv_with_tots['toxicity_rank']= 0
 csv_with_tots["toxicity_rank"] = csv_with_tots.groupby(['source_subreddit']) \
                                 ["toxicity_ratio","total_posts"] \
                                 .rank("first", ascending=False)
 
-
+# k this is the aggregation file by subreddit.  Ended up doing a bunch more aggs afterwards
 csv_with_tots.drop(columns = "norm_toxicity_accum") \
     .to_csv("source_target_subreddit_stats.csv",index=False)
 
+# Here is a bunch more aggs by different things
 csv_agg_parent = csv_agg2.groupby(['source_parent_group']) \
        .agg({'total_posts':pd.Series.sum, 
              'negative_posts':pd.Series.sum, 
@@ -217,12 +227,18 @@ csv_agg_parent = csv_agg2.groupby(['source_parent_group']) \
              'source_subreddit_row_count':pd.Series.sum, 
              'toxicity_ratio':pd.Series.mean,
              'norm_toxicity_ratio':pd.Series.mean, 
+             'pos_sentiment_vader':pd.Series.mean, 
+             'compnd_sentiment_vader':pd.Series.mean, 
              'neg_sentiment_vader':pd.Series.mean, 
              'liwc_negemo':pd.Series.mean, 
              'liwc_anx':pd.Series.mean,
              'liwc_anger':pd.Series.mean, 
              'liwc_sad':pd.Series.mean, 
-             'liwc_swear':pd.Series.mean}).reset_index()
+             'liwc_swear':pd.Series.mean,
+             'liwc_money':pd.Series.mean,
+             'liwc_relig':pd.Series.mean,
+             'liwc_death':pd.Series.mean
+             }).reset_index()
 
 csv_agg_child = csv_agg2.groupby(['source_parent_group','source_child_group']) \
        .agg({'total_posts':pd.Series.sum, 
@@ -232,13 +248,21 @@ csv_agg_child = csv_agg2.groupby(['source_parent_group','source_child_group']) \
              'source_subreddit_row_count':pd.Series.sum, 
              'toxicity_ratio':pd.Series.mean,
              'norm_toxicity_ratio':pd.Series.mean, 
+             'pos_sentiment_vader':pd.Series.mean, 
+             'compnd_sentiment_vader':pd.Series.mean, 
              'neg_sentiment_vader':pd.Series.mean, 
              'liwc_negemo':pd.Series.mean, 
              'liwc_anx':pd.Series.mean,
              'liwc_anger':pd.Series.mean, 
              'liwc_sad':pd.Series.mean, 
-             'liwc_swear':pd.Series.mean}).reset_index()
+             'liwc_swear':pd.Series.mean,
+             'liwc_money':pd.Series.mean,
+             'liwc_relig':pd.Series.mean,
+             'liwc_death':pd.Series.mean
+             }).reset_index()
 
+# I cant figure out how to group by nothing and have it come out as 1 row
+# so i do some bs here that works
 csv_agg_bs = csv_agg2
 csv_agg_bs["bs"] = 'bs'
 
@@ -250,25 +274,34 @@ csv_agg_all = csv_agg_bs.groupby(['bs']) \
              'source_subreddit_row_count':pd.Series.sum, 
              'toxicity_ratio':pd.Series.mean,
              'norm_toxicity_ratio':pd.Series.mean, 
+             'pos_sentiment_vader':pd.Series.mean, 
+             'compnd_sentiment_vader':pd.Series.mean, 
              'neg_sentiment_vader':pd.Series.mean, 
              'liwc_negemo':pd.Series.mean, 
              'liwc_anx':pd.Series.mean,
              'liwc_anger':pd.Series.mean, 
              'liwc_sad':pd.Series.mean, 
-             'liwc_swear':pd.Series.mean}).reset_index()
+             'liwc_swear':pd.Series.mean,
+             'liwc_money':pd.Series.mean,
+             'liwc_relig':pd.Series.mean,
+             'liwc_death':pd.Series.mean
+             }).reset_index()
 
 csv_agg_all.drop(columns='bs',inplace=True)
 csv_agg2.drop(columns='bs',inplace=True)
 
+# A big append party
 csv_all_aggs = csv_agg_all.append(csv_agg_parent.append(csv_agg_child.append(csv_agg2)))
 
+# reorder the columns nice and neat like they were in the other file
 csv_all_aggs_neat = csv_all_aggs[csv_agg2.columns]
-
 csv_all_aggs_neat = csv_all_aggs_neat.reset_index(drop=True)
 
+# put the one column agg-level at the very front of the dataframe.  hardcode a value
 csv_all_aggs_neat.insert(loc=0, column='agg_level', value= 4)
-
+# now overwrite the hardcoded value with the proper value
 csv_all_aggs_neat['agg_level']=csv_all_aggs_neat.isnull().sum(axis = 1)
 
+# Save and share
 csv_all_aggs_neat.to_csv("source_subreddit_summary.csv",index=False)
 
