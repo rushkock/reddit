@@ -237,6 +237,8 @@ function renderChartCollapsibleNetwork(params) {
           .text(d => d.data.name)
           .style('display', attrs.textDisplayed ? "initial" : "none")
 
+
+
         //channels grandchildren
         var channelsGrandchildren = enteredNodes
         .append("image")
@@ -249,8 +251,8 @@ function renderChartCollapsibleNetwork(params) {
         var makeborder = enteredNodes
           .append("circle")
           .attr("cx", 5.0)
-          .attr("cy", 4)
-          .attr("r", 18.5)
+          .attr("cy", 5)
+          .attr("r", 20)
           .style("fill", "transparent")
           .style("stroke", "white")
           .style("stroke-width", "1px")
