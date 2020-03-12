@@ -430,7 +430,7 @@ function renderChartCollapsibleNetwork(params) {
                         .attr("cy", 5)
                         .attr("r", 20)
                         .style("fill", "transparent")
-                        .style("stroke", "#00FF00")
+                        .style("stroke", "#39ff14")
                         .style("stroke-width", "2px")
                         .style("filter", "url(#glow)");
 
