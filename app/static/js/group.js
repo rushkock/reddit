@@ -332,7 +332,22 @@ function renderChartCollapsibleNetwork(params) {
 
       }
 
+      //--------------------Make things glow ---------------------
 
+            //Container for the gradients
+      var defs = svg.append("defs");
+
+      //Filter for the outside glow
+      var filter = defs.append("filter")
+          .attr("id","glow");
+      filter.append("feGaussianBlur")
+          .attr("stdDeviation","3.5")
+          .attr("result","coloredBlur");
+      var feMerge = filter.append("feMerge");
+      feMerge.append("feMergeNode")
+          .attr("in","coloredBlur");
+      feMerge.append("feMergeNode")
+          .attr("in","SourceGraphic");
 
       //-------------------- handle drag end event ---------------
       function dragended(d) {
@@ -406,14 +421,20 @@ function renderChartCollapsibleNetwork(params) {
                         $('.human').empty();
                         $('.pole_1').empty();
                         $('.legend').empty();
+
+                        // Append glowing border to selected sub
+
                         d3.select(this)
                         .append("circle")
                         .attr("cx", 5.0)
                         .attr("cy", 5)
                         .attr("r", 20)
                         .style("fill", "transparent")
-                        .style("stroke", "red")
-                        .style("stroke-width", "3px")
+                        .style("stroke", "#00FF00")
+                        .style("stroke-width", "2px")
+                        .style("filter", "url(#glow)");
+
+                        // Start animation of second screen
 
                         start_animation(d.data.name)
                         **/
