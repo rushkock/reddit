@@ -83,7 +83,7 @@ reddit_posts_colvec.columns = reddit_posts_colvec.columns.str.replace(' ', '')
 
 reddit_posts_colvec_ss = reddit_posts_colvec[['pos_sentiment_vader', 'compnd_sentiment_vader','neg_sentiment_vader', \
                                               'liwc_negemo', 'liwc_anx', 'liwc_anger', \
-                                              'liwc_sad',  'liwc_swear', 'liwc_money','liwc_relig','liwc_death']]
+                                              'liwc_sad',  'liwc_swear', 'liwc_money','liwc_relig','liwc_death', 'liwc_family']]
 glen = reddit_posts_colvec_ss.head()
 
 # stitch the original dataframe with the column names
@@ -136,7 +136,8 @@ reddit_posts_agg2 = reddit_posts_all. \
           'liwc_swear':pd.Series.mean, 
           'liwc_money':pd.Series.mean,
           'liwc_relig':pd.Series.mean,
-          'liwc_death':pd.Series.mean
+          'liwc_death':pd.Series.mean,
+          'liwc_family':pd.Series.mean
           }).reset_index()
           
 glen = reddit_posts_agg2.query("source_subreddit=='bestoflegaladvice'")
@@ -237,7 +238,8 @@ csv_agg_parent = csv_agg2.groupby(['source_parent_group']) \
              'liwc_swear':pd.Series.mean,
              'liwc_money':pd.Series.mean,
              'liwc_relig':pd.Series.mean,
-             'liwc_death':pd.Series.mean
+             'liwc_death':pd.Series.mean,
+             'liwc_family':pd.Series.mean
              }).reset_index()
 
 csv_agg_child = csv_agg2.groupby(['source_parent_group','source_child_group']) \
@@ -258,7 +260,8 @@ csv_agg_child = csv_agg2.groupby(['source_parent_group','source_child_group']) \
              'liwc_swear':pd.Series.mean,
              'liwc_money':pd.Series.mean,
              'liwc_relig':pd.Series.mean,
-             'liwc_death':pd.Series.mean
+             'liwc_death':pd.Series.mean,
+             'liwc_family':pd.Series.mean
              }).reset_index()
 
 # I cant figure out how to group by nothing and have it come out as 1 row
@@ -284,7 +287,8 @@ csv_agg_all = csv_agg_bs.groupby(['bs']) \
              'liwc_swear':pd.Series.mean,
              'liwc_money':pd.Series.mean,
              'liwc_relig':pd.Series.mean,
-             'liwc_death':pd.Series.mean
+             'liwc_death':pd.Series.mean,
+             'liwc_family':pd.Series.mean
              }).reset_index()
 
 csv_agg_all.drop(columns='bs',inplace=True)
