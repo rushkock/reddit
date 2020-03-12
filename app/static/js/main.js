@@ -35,8 +35,10 @@ function draw_radarChart(subreddit){
        margin: margin,
        levels: 5,
        roundStrokes: true,
-       color: d3.scaleOrdinal().range(["#26AF32", "#762712"]),
-       format: '.0f'
+       color: d3.scaleOrdinal().range(["#f55f22", "#26AF32"]),
+       format: '.0f',
+       legend: { title: 'Word usage on Reddit', translateX: 120, translateY: 10 },
+       unit: '$'
      };
      // Draw the chart, get a reference the created svg element :
      let svg_radar1 = RadarChart(".radarChart", data, radarChartOptions);
