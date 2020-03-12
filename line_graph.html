@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style type="text/css">
+/* 13. Basic Styling with CSS */
+
+/* Glen - this next section is just style sheet stuff (not important for anything) */
+
+/* Style the lines by removing the fill and applying a stroke */
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+/* Style the dots by assigning a fill and stroke */
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+
+  .focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+</style>
+<!-- Glen - thats the end of the stle sheet and this is the beginning of the html -->
+
+<!-- Body tag is where we will append our SVG and SVG objects-->
+<body>
+  <!-- Glen - so I added 2 text fields and a button to the html page where we
+  can enter data in this simple form object-->
+  <form>
+    subreddit :
+    <input type="text" id="txtSubreddit" value="the_donald">
+    toxicity :
+    <input type="text" id="txtToxicity" value="0.5">
+    <button type="button" onclick="addInputValues();">Add to line chart !</button>
+  <!-- Glen - this button activates a javacscript function below -->
+  </form>
+
+</body>
+
+<!-- Load in the d3 library -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+
+// Glen - these 2 arrays are like a global variable that we will update with
+// each button click
+var arrSubreddits = []
+var arrToxicities = []
+
+// Glen - this function call updates the 2 arrays and will later call the D3
+// logic to update the graph
+function addInputValues(){
+      // Selecting the input element and get its value
+      var txtToxicity = document.getElementById("txtToxicity").value;
+      var txtSubreddit = document.getElementById("txtSubreddit").value;
+      // Displaying the value
+      arrSubreddits.push(txtSubreddit);
+      arrToxicities.push({'y':parseFloat(txtToxicity)});
+      console.log(arrSubreddits);
+      console.log(arrToxicities);
+      window.alert("inspect the console to see the data, now call the d3 stuff and update the data")
+      display_d3();
+}
+
+
+// Glen - I suppose the entire rest of the program needs to be wrapped in a function and then called
+// by the button click above
+// ie procedure display_d3{...
+//function display_d3(){
+// Glen - clear the screen!
+
+// 2. Use the margin convention practice
+var margin = {top: 50, right: 50, bottom: 50, left: 50}
+  , width = window.innerWidth - margin.left - margin.right // Use the window's width
+  , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
+
+// The number of datapoints
+// Glen - need to change this to the number of data points in arrSubreddits
+var n = arrToxicities.length;
+//var n = 21;
+
+
+// 5. X scale will use the index of our data
+var xScale = d3.scaleLinear()
+    .domain([0, 4]) // input
+    .range([0, width]); // output
+
+// 6. Y scale will use the randomly generate number
+var yScale = d3.scaleLinear()
+    .domain([0, 1]) // input
+    .range([height, 0]); // output
+
+
+// 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
+// Glen - need to change this to use arrToxicities instead of randomNumbers
+var dataset = arrToxicities;
+//var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
+console.log(dataset)
+//console.log(dataset2)
+
+// 1. Add the SVG to the page and employ #2
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// 3. Call the x axis in a group tag
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+
+// 4. Call the y axis in a group tag
+svg.append("g")
+    .attr("class", "y axis")
+    .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+
+
+
+function display_d3(){
+
+d3.selectAll("path.line").remove();
+var last_element = arrSubreddits[arrSubreddits.length-1];
+
+// 7. d3's line generator
+var line = d3.line()
+    .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
+    .y(function(d) { return yScale(d.y); }) // set the y values for the line generator
+    .curve(d3.curveMonotoneX) // apply smoothing to the line
+
+
+// 9. Append the path, bind the data, and call the line generator
+svg.append("path")
+    .datum(dataset) // 10. Binds data to the line
+    .attr("class", "line") // Assign a class for styling
+    .attr("d", line); // 11. Calls the line generator
+
+
+
+// 12. Appends a circle for each datapoint
+svg.selectAll(".dot")
+    .data(dataset)
+  .enter().append("circle") // Uses the enter().append() method
+    .attr("class", "dot") // Assign a class for styling
+    .attr("cx", function(d, i) { return xScale(i) })
+    .attr("cy", function(d) { return yScale(d.y) })
+    .attr("r", 5);
+
+//to add labels to the dots a this section had to be added 
+svg.selectAll(".dodo")
+  .data(dataset)
+ .enter().append("text")
+  .attr("class", "dodo")
+  .attr("x", function(d,i) { return xScale(i); })
+  .attr("y", function(d) { return yScale(d.y); })
+  .attr("dx", ".71em")
+  .attr("dy", ".35em")
+  .text(last_element);
+
+//console.log(arrSubreddits); 
+  
+  //--Adel
+  //.enter().append("text").text('hello')
+  
+
+  
+  
+      //.on("mouseover", function(a, b, c) {
+  			//console.log(a)
+        //this.attr('class', 'focus')
+		//})
+      //.on("mouseout", function() {  })
+//       .on("mousemove", mousemove);
+
+//   var focus = svg.append("g")
+//       .attr("class", "focus")
+//       .style("display", "none");
+
+//   focus.append("circle")
+//       .attr("r", 4.5);
+
+//   focus.append("text")
+//       .attr("x", 9)
+//       .attr("dy", ".35em");
+
+//   svg.append("rect")
+//       .attr("class", "overlay")
+//       .attr("width", width)
+//       .attr("height", height)
+//       .on("mouseover", function() { focus.style("display", null); })
+//       .on("mouseout", function() { focus.style("display", "none"); })
+//       .on("mousemove", mousemove);
+
+//   function mousemove() {
+//     var x0 = x.invert(d3.mouse(this)[0]),
+//         i = bisectDate(data, x0, 1),
+//         d0 = data[i - 1],
+//         d1 = data[i],
+//         d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+//     focus.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
+//     focus.select("text").text(d);
+//   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
