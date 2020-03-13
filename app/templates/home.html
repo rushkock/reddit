@@ -18,6 +18,7 @@ Home
 <!-- D3 links -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3-legend/1.1.0/d3-legend.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 <script src="https://d3js.org/d3.v5.js"></script>
 <script>
@@ -33,10 +34,12 @@ Home
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-widgets.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.js"></script>
+<div class="lineChart" id="lineChart"></div>
 <script src="../static/js/main.js"></script>
 <script src="../static/js/home.js"></script>
 <script src="../static/js/group.js"></script>
 <script src="../static/js/radarChart.js"></script>
+<script src="../static/js/lineChart.js"></script>
 
 <div class="background"></div>
 <div class="cauldron"></div>
@@ -49,6 +52,7 @@ Home
 <div class="legend"></div>
 
 <div id="myGraph"></div>
+
 <script>
   d3.json('../static/json/data_new.json', data => {
     networkChart = renderChartCollapsibleNetwork()
@@ -64,6 +68,15 @@ Home
 {{ div|safe }}
 {{ script|safe }}
 
-<div class="radarChart" style="display: inline-flex;"></div>
+<div class="radarChart" id="radarChart"></div>
+
+
+
+<div class="row">
+   <div class="col-md-1 col-sm-2 col-xs-1"> <a href="#" onclick="clickRadar()" class="btn btn-sm animated-button thar-three">Radar Chart</a> </div>
+   <div class="col-md-1 col-sm-2 col-xs-1"> <a href="#" onclick="clickLine()" class="btn btn-sm animated-button thar-four">Line Chart</a> </div>
+ </div>
+
+
 
 {% endblock %}
