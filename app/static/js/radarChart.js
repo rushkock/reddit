@@ -10,6 +10,10 @@ const sin = Math.sin;
 const cos = Math.cos;
 const HALF_PI = Math.PI / 2;
 
+/*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
+
+
+
 const RadarChart = function RadarChart(parent_selector, data, options) {
 	//Wraps SVG text - Taken from http://bl.ocks.org/mbostock/7555321
 	const wrap = (text, width) => {
@@ -37,6 +41,8 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 			}
 	  });
 	}//wrap
+
+
 
 	const cfg = {
 	 w: 600,				//Width of the circle
@@ -310,7 +316,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .data(names)
 		  .enter()
 		  .append("rect")
-		  .attr("x", cfg.w - 130)
+		  .attr("x", cfg.w - 95)
 		  .attr("y", (d,i) => i * 20)
 		  .attr("width",12)
 		  .attr("height", 12)
@@ -320,11 +326,12 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .data(names)
 		  .enter()
 		  .append("text")
-		  .attr("x", cfg.w - 115)
+		  .attr("x", cfg.w - 82)
 		  .attr("y", (d,i) => i * 20 + 9)
 		  .attr("font-size", "14px")
 		  .attr("fill", "#fffff0")
 		  .text(d => d);
 	}
+
 	return svg;
 }

@@ -65,3 +65,28 @@ function process_radar_data(data, subreddit){
   }
   return selectedData
 }
+
+
+function clickRadar() {
+  var x = document.getElementById("radarChart");
+  var y = document.getElementById("lineChart")
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none"
+  }
+  else {
+    
+  }
+}
+
+function clickLine() {
+  var x = document.getElementById("radarChart");
+  var y = document.getElementById("lineChart")
+  if (y.style.display === "none") {
+    y.style.display = "block";
+    x.style.display = "none"
+  }
+  else {
+
+  }
+}

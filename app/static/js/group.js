@@ -26,7 +26,7 @@ function renderChartCollapsibleNetwork(params) {
   };
 
 
-  /*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
+
 
   var attrKeys = Object.keys(attrs);
   attrKeys.forEach(function (key) {
