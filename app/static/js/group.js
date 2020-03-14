@@ -26,7 +26,7 @@ function renderChartCollapsibleNetwork(params) {
   };
 
 
-  /*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
+
 
   var attrKeys = Object.keys(attrs);
   attrKeys.forEach(function (key) {
@@ -58,12 +58,11 @@ function renderChartCollapsibleNetwork(params) {
       //########################## HIERARCHY STUFF  #########################
       var hierarchy = {};
       hierarchy.root = d3.hierarchy(attrs.data.root);
-      console.log(attrs.data.root)
 
 
       //###########################   BEHAVIORS #########################
       var behaviors = {};
-      behaviors.zoom = d3.zoom().scaleExtent([0.75, 100, 8]).on('zoom', zoomed);
+      behaviors.zoom = d3.zoom().scaleExtent([0.6, 100, 8]).on('zoom', zoomed);
       behaviors.drag = d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
 
       //###########################   LAYOUTS #########################
@@ -148,6 +147,7 @@ function renderChartCollapsibleNetwork(params) {
 
       // flatten root
       var arr = flatten(hierarchy.root);
+      console.log(arr)
 
       // hide members based on their depth
       arr.forEach(d => {
@@ -234,8 +234,10 @@ function renderChartCollapsibleNetwork(params) {
         //node texts
         enteredNodes.append('text').attr('class', 'node-texts')
           .attr('x', 30).attr('fill', attrs.nodeTextColor)
+          .attr('opacity', 1)
           .text(d => d.data.name)
           .style('display', attrs.textDisplayed ? "initial" : "none")
+
 
         //channels grandchildren
         var channelsGrandchildren = enteredNodes
@@ -249,8 +251,8 @@ function renderChartCollapsibleNetwork(params) {
         var makeborder = enteredNodes
           .append("circle")
           .attr("cx", 5.0)
-          .attr("cy", 4)
-          .attr("r", 18.5)
+          .attr("cy", 5)
+          .attr("r", 20)
           .style("fill", "transparent")
           .style("stroke", "white")
           .style("stroke-width", "1px")
@@ -315,7 +317,8 @@ function renderChartCollapsibleNetwork(params) {
       function dragstarted(d) {
 
         //disable node fixing
-        nodes.each(d => { d.fx = null; d.fy = null })
+        nodes.each(d => {
+          d.fx = null; d.fy = null })
       }
 
 
@@ -329,7 +332,22 @@ function renderChartCollapsibleNetwork(params) {
 
       }
 
+      //--------------------Make things glow ---------------------
 
+            //Container for the gradients
+      var defs = svg.append("defs");
+
+      //Filter for the outside glow
+      var filter = defs.append("filter")
+          .attr("id","glow");
+      filter.append("feGaussianBlur")
+          .attr("stdDeviation","3.5")
+          .attr("result","coloredBlur");
+      var feMerge = filter.append("feMerge");
+      feMerge.append("feMergeNode")
+          .attr("in","coloredBlur");
+      feMerge.append("feMergeNode")
+          .attr("in","SourceGraphic");
 
       //-------------------- handle drag end event ---------------
       function dragended(d) {
@@ -366,8 +384,6 @@ function renderChartCollapsibleNetwork(params) {
           .attr('opacity', 1)
           .attr('stroke', attrs.activeLinkColor)
 
-
-
       }
 
       // --------------- handle mouseleave event ---------------
@@ -390,15 +406,11 @@ function renderChartCollapsibleNetwork(params) {
       function nodeClick(d) {
 
                     if (d.children) {
-                      console.log("first")
-                      console.log(d.children)
                       d._children = d.children;
                       d.children = null;
                     }
                     else {
                       if (!d._children){
-                        console.log(d.data.name)
-                        /**
                         $('.radarChart').empty();
                         $('.background').empty();
                         $('.cauldron').empty();
@@ -409,8 +421,23 @@ function renderChartCollapsibleNetwork(params) {
                         $('.human').empty();
                         $('.pole_1').empty();
                         $('.legend').empty();
+
+                        // Append glowing border to selected sub
+
+                        d3.select(this)
+                        .append("circle")
+                        .attr("cx", 5.0)
+                        .attr("cy", 5)
+                        .attr("r", 20)
+                        .style("fill", "transparent")
+                        .style("stroke", "#39ff14")
+                        .style("stroke-width", "2px")
+                        .style("filter", "url(#glow)");
+
+                        // Start animation of second screen
+
                         start_animation(d.data.name)
-                        **/
+                      
                       }
                       d.children = d._children;
                       d._children = null;
@@ -443,6 +470,7 @@ function renderChartCollapsibleNetwork(params) {
         d3.selectAll('.node').each(n => { n.fx = null; n.fy = null; })
       }
 
+
       function projectCircle(value, radius) {
         var r = radius || 0;
         var corner = value * 2 * Math.PI;
@@ -466,6 +494,7 @@ function renderChartCollapsibleNetwork(params) {
             if (!node.cluster) {
               // if cluster coordinates are not set, set it
               node.cluster = { x: node.x, y: node.y }
+              console.log(node.depth)
             }
           }
           nodesArray.push(node);

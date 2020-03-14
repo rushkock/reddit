@@ -38,8 +38,10 @@ function draw_radarChart(subreddit){
        margin: margin,
        levels: 5,
        roundStrokes: true,
-       color: d3.scaleOrdinal().range(["#26AF32", "#762712"]),
-       format: '.0f'
+       color: d3.scaleOrdinal().range(["#f55f22", "#26AF32"]),
+       format: '.0f',
+       legend: { title: 'Word usage on Reddit', translateX: 120, translateY: 10 },
+       unit: '$'
      };
      // Draw the chart, get a reference the created svg element :
      let svg_radar1 = RadarChart(".radarChart", data, radarChartOptions);
@@ -57,9 +59,34 @@ function process_radar_data(data, subreddit){
       sub_index = data[i];
     }
   }
-  selectedData = [sub_index]
+  selectedData = [data[0], sub_index]
   if (sub_index === 0){
     selectedData = [data[sub_index]]
   }
   return selectedData
+}
+
+
+function clickRadar() {
+  var x = document.getElementById("radarChart");
+  var y = document.getElementById("lineChart")
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none"
+  }
+  else {
+
+  }
+}
+
+function clickLine() {
+  var x = document.getElementById("radarChart");
+  var y = document.getElementById("lineChart")
+  if (y.style.display === "none") {
+    y.style.display = "block";
+    x.style.display = "none"
+  }
+  else {
+
+  }
 }

@@ -10,6 +10,10 @@ const sin = Math.sin;
 const cos = Math.cos;
 const HALF_PI = Math.PI / 2;
 
+/*############### IF EXISTS OVERWRITE ATTRIBUTES FROM PASSED PARAM  #######  */
+
+
+
 const RadarChart = function RadarChart(parent_selector, data, options) {
 	//Wraps SVG text - Taken from http://bl.ocks.org/mbostock/7555321
 	const wrap = (text, width) => {
@@ -38,6 +42,8 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	  });
 	}//wrap
 
+
+
 	const cfg = {
 	 w: 600,				//Width of the circle
 	 h: 600,				//Height of the circle
@@ -54,7 +60,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	 color: d3.scaleOrdinal(d3.schemeCategory10),	//Color function,
 	 format: '.2%',
 	 unit: '',
-	 legend: false
+	 legend: true
 	};
 
 	//Put all of the options into a variable called cfg
@@ -172,6 +178,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 	axis.append("text")
 		.attr("class", "legend")
 		.style("font-size", "11px")
+		.attr("fill", "#fffff0")
 		.attr("text-anchor", "middle")
 		.attr("dy", "0.35em")
 		.attr("x", (d,i) => rScale(maxValue * cfg.labelFactor) * cos(angleSlice * i - HALF_PI))
@@ -293,10 +300,10 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 			let title = legendZone.append("text")
 				.attr("class", "title")
 				.attr('transform', `translate(${cfg.legend.translateX},${cfg.legend.translateY})`)
-				.attr("x", cfg.w - 70)
+				.attr("x", cfg.w - 130)
 				.attr("y", 10)
-				.attr("font-size", "12px")
-				.attr("fill", "#404040")
+				.attr("font-size", "16px")
+				.attr("fill", "#fffff0")
 				.text(cfg.legend.title);
 		}
 		let legend = legendZone.append("g")
@@ -309,21 +316,22 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
 		  .data(names)
 		  .enter()
 		  .append("rect")
-		  .attr("x", cfg.w - 65)
+		  .attr("x", cfg.w - 95)
 		  .attr("y", (d,i) => i * 20)
-		  .attr("width", 10)
-		  .attr("height", 10)
+		  .attr("width",12)
+		  .attr("height", 12)
 		  .style("fill", (d,i) => cfg.color(i));
 		// Create labels
 		legend.selectAll('text')
 		  .data(names)
 		  .enter()
 		  .append("text")
-		  .attr("x", cfg.w - 52)
+		  .attr("x", cfg.w - 82)
 		  .attr("y", (d,i) => i * 20 + 9)
-		  .attr("font-size", "11px")
-		  .attr("fill", "#737373")
+		  .attr("font-size", "14px")
+		  .attr("fill", "#fffff0")
 		  .text(d => d);
 	}
+
 	return svg;
 }
