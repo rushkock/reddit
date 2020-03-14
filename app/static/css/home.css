@@ -2,6 +2,54 @@ body {
   background-color: #363636;
 }
 
+
+  .line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+
+  .focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+.axisRed line{
+	stroke: white;
+  }
+  
+  .axisRed path{
+	stroke: white;
+  }
+  
+  .axisRed text{
+	fill: white;
+  }  
+
+
+  .dodo text {
+	fill: #ffab00;
+    stroke: #fff;
+}
+
+.grid line{
+	
+    stroke: #fff;
+}
+
+
+
+
 .dropdown{
   position: absolute;
   left: 30px;
