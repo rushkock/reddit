@@ -61,3 +61,10 @@ body {
   left: 0px;
   top: 0px;
 }
+
+#myGraph{
+  overflow: scroll;
+  width: 600px;
+  height: 1000px;
+  background: transparent; 
+}
