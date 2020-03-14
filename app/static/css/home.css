@@ -47,7 +47,7 @@ body {
 .lineChart{
   position: absolute;
   left: 1500px;
-  top: 100px;
+  top: 200px;
 }
 
 .chart{
@@ -77,6 +77,8 @@ body {
 
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+.
 
 .mrng-60-top {
 	margin-top: 60px;
