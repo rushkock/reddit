@@ -14,6 +14,7 @@ function start_animation(subreddit){
   Promise.all(requests).then(function(response) {
      var toxicity = process_data_experiment(response, subreddit);
      move_images(toxicity, "")
+     addInputValues(subreddit,toxicity)
      draw_radarChart(subreddit)
   }).catch(function(e) {
       throw(e);
