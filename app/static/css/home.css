@@ -2,6 +2,54 @@ body {
   background-color: #363636;
 }
 
+
+  .line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+
+  .focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+.axisRed line{
+	stroke: white;
+  }
+  
+  .axisRed path{
+	stroke: white;
+  }
+  
+  .axisRed text{
+	fill: white;
+  }  
+
+
+  .dodo text {
+	fill: #ffab00;
+    stroke: #fff;
+}
+
+.grid line{
+	
+    stroke: #fff;
+}
+
+
+
+
 .dropdown{
   position: absolute;
   left: 30px;
@@ -46,7 +94,7 @@ body {
 
 .lineChart{
   position: absolute;
-  left: 1520px;
+  left: 1500px;
   top: 200px;
 }
 
@@ -83,6 +131,7 @@ body {
 
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
 
 .mrng-60-top {
 	margin-top: 60px;
@@ -159,7 +208,7 @@ a.animated-button.thar-three {
 	cursor: pointer;
 	display: block;
 	position: relative;
-	border: 2px solid #F7CA18;
+	border: 2px solid #D24D57;
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
 0s;
 }
@@ -183,18 +232,18 @@ a.animated-button.thar-three:before {
 	z-index: -1;
 	content: '';
 	color: #000 !important;
-	background: #F7CA18;
+	background: #D24D57;
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
-0s;
+
 }
 a.animated-button.thar-four {
 	color: #fff;
 	cursor: pointer;
 	display: block;
 	position: relative;
-	border: 2px solid #F7CA18;
+	border: 2px solid #D24D57;
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
-0s;
+
 }
 a.animated-button.thar-four:hover {
 	color: #000 !important;
@@ -216,7 +265,7 @@ a.animated-button.thar-four:before {
 	z-index: -1;
 	content: '';
 	color: #000 !important;
-	background: #F7CA18;
+	background: #D24D57;
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
-0s;
+
 }
