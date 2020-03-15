@@ -118,7 +118,8 @@ d3v5.xml('../static/images/beaker.svg')
   beaker_svg_1
   .attr('width', 300)
   .attr('height', 500)
-});
+})
+.catch(function(e){console.log("Cancelled promise")});
 
 // Read the legend SVG
 d3v5.xml('../static/images/legend.svg')
@@ -128,7 +129,8 @@ d3v5.xml('../static/images/legend.svg')
   legend_svg
   .attr('width', 200)
   .attr('height', 250)
-});
+})
+.catch(function(e){console.log("Cancelled promise")});
 
 // Read the human svg and make it invisible
 d3v5.xml('../static/images/human.svg')
@@ -143,7 +145,8 @@ d3v5.xml('../static/images/human.svg')
   human_svg_1
   .select("g")
   .selectAll(".text_bubble").style("fill-opacity", 0)
-});
+})
+.catch(function(e){console.log("Cancelled promise")});
 
 // Read the round beakeer svg
 d3v5.xml('../static/images/round_beaker.svg')
@@ -153,7 +156,8 @@ d3v5.xml('../static/images/round_beaker.svg')
   round_beaker_svg_1
   .attr('width', 600)
   .attr('height', 600)
-});
+})
+.catch(function(e){console.log("Cancelled promise")});
 
 // read the test tube svg
 d3v5.xml('../static/images/test_tube.svg')
@@ -173,7 +177,7 @@ d3v5.xml('../static/images/test_tube.svg')
   else{
     test_tube_transition(toxicity)
   }
-});
+}).catch(function(e){console.log("Cancelled promise")});
 
 
 }
@@ -229,7 +233,8 @@ function place_chemical_svg(path, div_name){
     .attr("height", 100)
     // svg repositioning
     $(class_name).css({top: Math.random() * 1000, left: Math.random() * 2000, position:'absolute'});
-  });
+  })
+  .catch(function(e){console.log("Cancelled promise")});
 }
 // Place 3 of the chemical from the svg 1
 for (i=0;i<3;i++){
@@ -392,7 +397,7 @@ svg.append('rect')
   beaker(toxicity)
 
   return Promise.all(list_round_beaker_transitions)
-}).then(function(){
+}).catch(function(e){console.log("Cancelled promise")}).then(function(){
   // Remove all the pipes that were drawn during the transition
   var transition_1 = d3v5.select('.pole_1').select('svg').selectAll('.tube_rect_left')
   .transition()
@@ -470,7 +475,7 @@ svg.append('rect')
     list_round_beaker_transitions.push(transition)
   }
   return Promise.all(list_round_beaker_transitions)
-}).then(function(){
+}).catch(function(e){console.log("Cancelled promise")}).then(function(){
   var transition_1 = d3v5.select('.pole_1').select('svg').select('.tube_rect_left')
   .transition()
   .duration(500)
@@ -482,9 +487,9 @@ svg.append('rect')
   .attr('height',0)
   .end()
   return Promise.all([transition_1, transition_2])
-}).then(function(){
+}).catch(function(e){console.log("Cancelled promise")}).then(function(){
   test_tube_transition(toxicity)
-})
+}).catch(function(e){console.log("Cancelled promise")})
 }
 
 function test_tube_transition(toxicity){
@@ -569,21 +574,21 @@ t.on("start", function() {
                             test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 0).end().then(function(){
                               test_tube_svg.selectAll(".test_tube0").transition().duration(300).style("fill-opacity", 1).end().then(function(){
                                 test_tube_svg.selectAll(".test_tube1").transition().duration(300).style("fill-opacity", 0)
-                              })
-                            })
-                          })
-                        })
-                      })
-                    })
-                  })
-                })
-              })
-            })
-          })
-        })
-      })
-    })
-  })
+                              }).catch(function(e){console.log("Cancelled promise")})
+                            }).catch(function(e){console.log("Cancelled promise")})
+                          }).catch(function(e){console.log("Cancelled promise")})
+                        }).catch(function(e){console.log("Cancelled promise")})
+                      }).catch(function(e){console.log("Cancelled promise")})
+                    }).catch(function(e){console.log("Cancelled promise")})
+                  }).catch(function(e){console.log("Cancelled promise")})
+                }).catch(function(e){console.log("Cancelled promise")})
+              }).catch(function(e){console.log("Cancelled promise")})
+            }).catch(function(e){console.log("Cancelled promise")})
+          }).catch(function(e){console.log("Cancelled promise")})
+        }).catch(function(e){console.log("Cancelled promise")})
+      }).catch(function(e){console.log("Cancelled promise")})
+    }).catch(function(e){console.log("Cancelled promise")})
+  }).catch(function(e){console.log("Cancelled promise")})
 })
 }
 
@@ -744,7 +749,7 @@ function bubbling(){
         transitions_list.push(update_function);
       }
       return Promise.all(transitions_list);
-    }).catch(function(error){console.log(error);}).then(function(){
+    }).catch(function(error){console.log("Cancelled promise");}).then(function(){
       var update_function = update(positions_1, xr_1,  opacity_1, fill_1)
       transitions_list = []
       for (var j=0; j<2; j++){
@@ -753,7 +758,7 @@ function bubbling(){
           transitions_list.push(update_function);
         }
         return Promise.all(transitions_list);
-      }).then(function(){
+      }).catch(function(e){console.log("Cancelled promise")}).then(function(){
         var update_function = update(positions_2, xr_2,  opacity_2, fill_2)
         transitions_list = []
         for (var j=0; j<2; j++){
@@ -762,9 +767,9 @@ function bubbling(){
             transitions_list.push(update_function);
           }
           return Promise.all(transitions_list);
-        }).then(function(){
+        }).catch(function(e){console.log("Cancelled promise")}).then(function(){
           d3v5.select('.beaker').select("svg").selectAll("circle.circle1").transition().duration(500).style("opacity", 0)
-        });
+        }).catch(function(e){console.log("Cancelled promise")});
       };
 
 function background_bubbles(){
@@ -859,7 +864,7 @@ async function transition_1(circles, popped){
           .attr('cy', function(){ return this.cy.baseVal.value - (20 + Math.random() * 80)})
           .ease(easing_functions[Math.floor(Math.random() * easing_functions.length)])
           .end();
-  console.log("heybbbboi")
+
   try {
       var class_name = "." + popped
       await  d3v5.selectAll(class_name)
@@ -876,12 +881,10 @@ async function transition_1(circles, popped){
               .attr('r', function(){ return (Math.random() * 10)})
               .end();
 
-      console.log("heybbbboi")
-
      transition_1(circles, popped);
-  } catch(err) {
+  } catch(e) {
    // catches errors both in fetch and response.json
-   alert( popped);
+   console.log("Cancelled promise")
   }
 };
 
