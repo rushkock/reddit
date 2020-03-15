@@ -230,7 +230,7 @@ a.animated-button.thar-three {
 	position: relative;
 	border: 2px solid #D24D57;
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
-0s;
+
 }
 a.animated-button.thar-three:hover {
 	color: #000 !important;
