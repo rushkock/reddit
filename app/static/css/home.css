@@ -120,8 +120,8 @@ body {
 
 .legend{
   position: absolute;
-  left: 1060px;
-  top: 700px;
+  left: 1120px;
+  top: 720px;
 }
 
 .background{
@@ -134,7 +134,8 @@ body {
   .stats{
     position: absolute;
     left: 1450px;
-    top: 130px;
+    top: 0px;
+    display:none;
   }
 
   .radarChart{

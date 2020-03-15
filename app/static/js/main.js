@@ -2,7 +2,8 @@
 // ONLY when the data is loaded then it will execute a function
 // In this function we call the functions to make the D3 visualizations
 window.onload = function(){
-  start_animation(subreddit)
+
+  start_animation("the_donald", function(){})
 }
 
 function process_data_experiment(data, subreddit){
@@ -12,11 +13,12 @@ function process_data_experiment(data, subreddit){
   return parseFloat(subreddit.norm_toxicity_ratio);
 }
 
-function start_animation(subreddit){
+function start_animation(subreddit, tracking_click_f){
   var requests = [d3v5.csv("../static/data/source_subreddit_summary.csv")];
   Promise.all(requests).then(function(response) {
      var toxicity = process_data_experiment(response, subreddit);
-     move_images(toxicity, "")
+     var choose_animation_type = ["test_tube", "test_tube", "test_tube","", "round_beaker", ""]
+     move_images(toxicity, choose_animation_type[Math.floor(Math.random() * choose_animation_type.length)], tracking_click_f)
      addInputValues(subreddit,toxicity)
      draw_radarChart(subreddit)
   }).catch(function(e) {

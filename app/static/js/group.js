@@ -1,5 +1,5 @@
 function renderChartCollapsibleNetwork(params) {
-
+  var tracking_click = false
   // exposed variables
   var attrs = {
     id: 'id' + Math.floor(Math.random() * 1000000),
@@ -398,10 +398,12 @@ function renderChartCollapsibleNetwork(params) {
 
       // --------------- handle mouseleave event ---------------
       function nodeMouseLeave(d) {
+        if (!tracking_click){
+          // return things back to normal
+          nodesWrapper.selectAll('.node').attr('opacity', 1);
+          linksWrapper.selectAll('.link').attr('opacity', 1).attr('stroke', attrs.linkColor)
+        }
 
-        // return things back to normal
-        nodesWrapper.selectAll('.node').attr('opacity', 1);
-        linksWrapper.selectAll('.link').attr('opacity', 1).attr('stroke', attrs.linkColor)
       }
 
       function collapse(d) {
@@ -432,6 +434,12 @@ function renderChartCollapsibleNetwork(params) {
                         $('.pole_1').empty();
                         $('.legend').empty();
 
+                        d3v5.select(".stats").style('display', 'none')
+                        tracking_click = true
+                        //linksWrapper.selectAll('.link').attr('opacity', attrs.hoverOpacity);
+                        //
+
+
                         // Append glowing border to selected sub
 
                         d3.select(this)
@@ -446,7 +454,10 @@ function renderChartCollapsibleNetwork(params) {
 
                         // Start animation of second screen
 
-                        start_animation(d.data.name)
+                        start_animation(d.data.name, function(){tracking_click=false
+                          d3v5.selectAll('.node').attr('opacity', 1);
+                          d3v5.selectAll('.link').attr('opacity', 1).attr('stroke', attrs.linkColor)
+                        })
 
                       }
                       d.children = d._children;

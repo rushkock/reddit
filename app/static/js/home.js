@@ -95,14 +95,31 @@ svg_pole_1.append('rect')
 .attr('y', 220)
 .attr('class', "pole")
 .attr('rx', 5)
+
+// rect  horizontal right
+svg_pole_1.append("rect")
+.attr('width', 100)
+.attr('height', 20)
+.attr('x', 1130)
+.attr('y', 800)
+.attr('class', "pole_horizontal")
+
+// Right small
+svg_pole_1.append('rect')
+.attr('width', 25)
+.attr('height', 60)
+.attr('x',1420)
+.attr('y', 220)
+.attr('class', "pole")
+.attr('rx', 5)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////// MAIN FUNCTION TO MAKE ANIMATION  ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-
-function move_images(toxicity, animation){
-
+var tracking_click = function(){}
+function move_images(toxicity, animation, tracking_click_f){
+tracking_click = tracking_click_f
 // make the background chemicals
 make_background()
 // draw the poles in the middle of screen
@@ -128,7 +145,8 @@ d3v5.xml('../static/images/legend.svg')
   var legend_svg = d3v5.select('.legend').select('svg')
   legend_svg
   .attr('width', 200)
-  .attr('height', 250)
+  .attr('height', 225)
+
 })
 .catch(function(e){console.log("Cancelled promise")});
 
@@ -169,13 +187,13 @@ d3v5.xml('../static/images/test_tube.svg')
   .attr('height', 500)
   // This function selects the animation that should be shown
   if (animation === "test_tube"){
-    animate_round_beaker_2(toxicity)
+    test_tube_transition(toxicity)
   }
   else if (animation === "round_beaker"){
-    animate_round_beaker(toxicity)
+      animate_round_beaker(toxicity)
   }
   else{
-    test_tube_transition(toxicity)
+    animate_round_beaker_2(toxicity)
   }
 }).catch(function(e){console.log("Cancelled promise")});
 
@@ -331,6 +349,33 @@ d3v5.select(".human").select("svg").append("text")
 .attr("dy", ".15em")
 .text(function(d) { return toxicity.toFixed(2) * 100 + " %"; });
 
+d3v5.transition()
+  .delay(8000)
+  .select(".stats").style('display', 'block')
+  .end().then(function(){
+    tracking_click()
+
+    d3v5.select(".buttonLine")
+    .transition()
+    .duration(500)
+    .style('opacity', 0.3)
+    .transition()
+    .duration(500)
+    .style('opacity', 1)
+    .transition()
+    .duration(500)
+    .style('opacity', 0.3)
+    .transition()
+    .duration(500)
+    .style('opacity', 1)
+    .transition()
+    .duration(500)
+    .style('opacity', 0.3)
+    .transition()
+    .duration(500)
+    .style('opacity', 1)
+  })
+
 }
 
 function animate_round_beaker_2(toxicity){
@@ -342,7 +387,7 @@ var svg = d3v5.select('.pole_1').select('svg');
 // rect right
 svg.append('rect')
 .attr('width', 40)
-.attr('x',1600)
+.attr('x',1325)
 .attr('y', 270)
 .attr('class', 'tube_rect_right pole')
 .transition()
@@ -446,42 +491,51 @@ function animate_round_beaker(toxicity){
 // Draw the poles that are needed
 var svg = d3v5.select('.pole_1').select('svg');
 svg.append('rect')
-.attr('width', 10)
-.attr('x',1335)
-.attr('y', 230)
-.attr('class', 'pole')
-.attr('class', 'tube_rect_right')
+.attr('width', 40)
+.attr('x',1320)
+.attr('y', 260)
+.attr('class', 'tube_rect_right pole')
 .transition()
 .duration(1000)
-.attr('height', 230)
+.attr('height', 200)
+
 svg.append('rect')
-.attr('width', 10)
-.attr('x', 750)
-.attr('y', 95)
-.attr('class', 'pole')
-.attr('class', 'tube_rect_left')
+.attr('width', 40)
+.attr('x', 735)
+.attr('y', 120)
+.attr('class', 'tube_rect_left pole')
 .transition()
 .duration(2000)
-.attr('height', 230)
+.attr('height', 50)
+
+svg.append('rect')
+.attr('height', 20)
+.attr('x', 730)
+.attr('y', 150)
+.attr('class', 'tube_rect_left pole')
+.attr('rx', 5)
+.transition()
+.duration(2000)
+.attr('width', 50)
 .end().then(function(){
   function circles_round_beaker(delay){
 
     var svg = d3v5.select('.pole_1').select('svg');
     var transitions = svg.append('circle')
-    .attr('r', 7)
+    .attr('r', 10)
     .attr('cx', 1340)
-    .attr('cy', 460)
+    .attr('cy', 470)
     .attr('fill', '#927acb')
     .transition()
     .delay(delay)
     .duration(500)
-    .attr('cy', 235)
+    .attr('cy', 245)
     .transition()
     .duration(500)
-    .attr('cx', 1105)
+    .attr('cx', 1120)
     .transition()
     .duration(500)
-    .attr('cy', 95)
+    .attr('cy', 105)
     .transition()
     .duration(500)
     .attr('cx', 755)
@@ -501,12 +555,12 @@ svg.append('rect')
   }
   return Promise.all(list_round_beaker_transitions)
 }).catch(function(e){console.log("Cancelled promise")}).then(function(){
-  var transition_1 = d3v5.select('.pole_1').select('svg').select('.tube_rect_left')
+  var transition_1 = d3v5.select('.pole_1').select('svg').selectAll('.tube_rect_left')
   .transition()
   .duration(500)
   .attr('height',0)
   .end()
-  var transition_2 = d3v5.select('.pole_1').select('svg').select('.tube_rect_right')
+  var transition_2 = d3v5.select('.pole_1').select('svg').selectAll('.tube_rect_right')
   .transition()
   .duration(500)
   .attr('height',0)
