@@ -6,7 +6,7 @@ function draw_pole(){
 // select the div pole1
 var svg_pole_1 = d3v5.select('.pole_1')
 .append('svg')
-.attr("width", window.innerWidth)
+.attr("width", 1600)
 .attr("height", 1000)
 
 // Gradient for the vertical pipes
@@ -81,7 +81,7 @@ svg_pole_1.append('rect')
 
 // rect  horizontal right
 svg_pole_1.append("rect")
-.attr('width', 400)
+.attr('width', 300)
 .attr('height', 40)
 .attr('x', 1130)
 .attr('y', 230)
@@ -91,7 +91,7 @@ svg_pole_1.append("rect")
 svg_pole_1.append('rect')
 .attr('width', 25)
 .attr('height', 60)
-.attr('x',1520)
+.attr('x',1420)
 .attr('y', 220)
 .attr('class', "pole")
 .attr('rx', 5)
@@ -317,7 +317,7 @@ var svg = d3v5.select('.pole_1').select('svg');
 // rect right
 svg.append('rect')
 .attr('width', 40)
-.attr('x',1325)
+.attr('x',1600)
 .attr('y', 270)
 .attr('class', 'tube_rect_right pole')
 .transition()
@@ -790,7 +790,7 @@ function background_bubbles(){
   }
   var positions_data = generatePosition(positions_data_0)
   // SVG viewport
-  var svg = d3v5.select('.background').append('svg').attr("width", window.innerWidth)
+  var svg = d3v5.select('.background').append('svg').attr("width", 1800)
   .attr("height", 1000);
   function make_circles(positions_data, data, color){
 
