@@ -98,6 +98,26 @@ body {
   top: 200px;
 }
 
+.pole{
+  fill: url(#mainGradient) #fff;
+}
+
+#mainGradient {
+  --color-stop: #c7b7b7;
+  --color-bot: #f7f7f7;
+}
+
+.pole_horizontal{
+  fill: url(#mainGradient_horizontal) #fff;
+  -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+#mainGradient_horizontal {
+  --color-stop: #c7b7b7;
+  --color-bot: #f7f7f7;
+}
+
+
 .chart{
   position: absolute;
   left: 1500px;
@@ -112,8 +132,8 @@ body {
 
 .legend{
   position: absolute;
-  left: 1020px;
-  top: 240px;
+  left: 1060px;
+  top: 700px;
 }
 
 .background{

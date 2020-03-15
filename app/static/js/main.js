@@ -76,7 +76,7 @@ function clickRadar() {
     y.style.display = "none"
   }
   else {
-    
+
   }
 }
 

@@ -437,7 +437,7 @@ function renderChartCollapsibleNetwork(params) {
                         // Start animation of second screen
 
                         start_animation(d.data.name)
-                        **/
+                      
                       }
                       d.children = d._children;
                       d._children = null;
