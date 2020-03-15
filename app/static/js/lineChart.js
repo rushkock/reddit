@@ -23,9 +23,12 @@ function addInputValues(subreddit,toxicity){
       if (arrSubreddits.length == 5) {
         window.arrSubreddits=[]
         window.arrToxicities=[]
+        
         ;
       }
-
+      
+      if (arrSubreddits.includes(subreddit) == false ) {
+        
       arrSubreddits.push(subreddit);
       arrToxicities.push({'y':parseFloat(toxicity)});
       //arrToxicities.push({'y':parseFloat(txtToxicity)});
@@ -33,18 +36,19 @@ function addInputValues(subreddit,toxicity){
       console.log(arrToxicities);
       //window.alert("inspect the console to see the data, now call the d3 stuff and update the data")
 
-      //console.clear();
-
-
       display_d3();
+      }
+
+      
 }
+
 
 
 
 //SET up an empty GRAPH
 
 // 2. Use the margin convention practice
-var margin = {top: 50, right: 50, bottom: 50, left: 50}
+var margin = {top: 50, right: 150, bottom: 50, left: 50}
   , width=300, height=300
   //width = window.innerWidth - margin.left - margin.right // Use the window's width
   //, height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
@@ -57,8 +61,13 @@ var n = arrToxicities.length;
 
 // 5. X scale will use the index of our data
 var xScale = d3.scaleLinear()
-    .domain([0, 4]) // input
+    .domain([0,4]) // input
     .range([0, width]); // output
+/*
+var ordinalScale = d3.scaleOrdinal()
+    .domain(arrSubreddits)
+    //.range(['black', '#ccc', '#ccc']);
+ */ 
 
 // 6. Y scale will use the randomly generate number
 var yScale = d3.scaleLinear()
@@ -82,32 +91,7 @@ var svg = d3.select("#lineChart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// 3. Call the x axis in a group tag
-svg.append("g")
-    .attr("class", "axisRed")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
 
-
-// 4. Call the y axis in a group tag
-svg.append("g")
-    .attr("class", "axisRed")
-    .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
-
-/*
-svg.append("g")
-    .attr("class", "grid")
-    .call(d3.axisLeft(yScale)
-            .tickSize(-width)
-            .tickFormat("")
-
-    );
-*/
-
-//svg.append("rect")
-//    .attr("width", "80%")
-//    .attr("height", "80%")
-//    .attr("fill", "white");
 
 
 //THIS is the function which adds the new dots to the graph
@@ -121,12 +105,57 @@ function display_d3(){
 
 //if (arrSubreddits.length == 1) {
 //  d3.selectAll("circle.dot").remove();
-  ;
+  
 //}
 
+var last_element = arrSubreddits[arrSubreddits.length-1];
+
+
+
+//axis_data=last_element
+axis_data = [{subreddit: arrSubreddits[0]},{subreddit: arrSubreddits[1]},{subreddit: arrSubreddits[2]},{subreddit: arrSubreddits[3]},{subreddit: arrSubreddits[4]}]
+//axis_data = [{subreddit:"the_donald"},{subreddit:"ruchella"},{subreddit:"adel"},{subreddit:"kovacs"},{subreddit:"ruchaaella"}]
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.1)
+x.domain(axis_data.map(function(d) { return d.subreddit; }));
+var xAxis = d3v5.axisBottom(x);
+
+
+
+svg.append("g")
+    .attr("class", "axisRed")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis); // Create an axis component with d3.axisBottom
+
+
+
+/*
+// 3. Call the x axis in a group tag
+svg.append("g")
+    .attr("class", "axisRed")
+    .attr("transform", "translate(0," + height + ")")
+    //.data(arrSubreddits)
+    .call(d3.axisBottom(xScale)
+    .tickValues(['0','1','2','3','4'])
+    //.tickValues(xScale.domain())
+    .tickFormat(()=>{return ['aa','bb','cc','dd','ee']})
+    //.tickFormat(function(d,i) { return arrSubreddits(i) })
+    )
+    //.tickValues(arrSubreddits.length); // Create an axis component with d3.axisBottom
+    ;
+  // Create an axis component with d3.axisBottom
+
+*/
+
+
+
+// 4. Call the y axis in a group tag
+svg.append("g")
+    .attr("class", "axisRed")
+    .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
 
 
 d3.selectAll("path.line").remove();
+
 
 var last_element = arrSubreddits[arrSubreddits.length-1];
 
@@ -140,8 +169,12 @@ var line = d3.line()
 // 9. Append the path, bind the data, and call the line generator
 svg.append("path")
     .datum(dataset) // 10. Binds data to the line
-    .attr("class", "line") // Assign a class for styling
-    .attr("d", line); // 11. Calls the line generator
+    .attr("class", "line")// Assign a class for styling
+  // .transition()
+  //.duration(10000)
+    .attr("d", line)
+    ; // 11. Calls the line generator
+
 
 
   //.ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
@@ -167,7 +200,10 @@ svg.selectAll(".dodo")
   .attr("y", function(d) { return yScale(d.y); })
   .attr("dx", ".71em")
   .attr("dy", ".35em")
-  .style('fill', 'darkOrange')
-  .text(last_element);
+  .style('fill', '#ff6600')
+  .text(last_element)
+  ;
 
+
+  
 }
