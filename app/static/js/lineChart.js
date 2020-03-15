@@ -35,8 +35,6 @@ function addInputValues(subreddit,toxicity){
       console.log(arrSubreddits);
       console.log(arrToxicities);
       //window.alert("inspect the console to see the data, now call the d3 stuff and update the data")
-      
-      //console.clear()
 
       display_d3();
       }
@@ -95,11 +93,12 @@ var svg = d3.select("#lineChart").append("svg")
 
 
 
-//THIS is the function which adds the new dots to the graph 
+
+//THIS is the function which adds the new dots to the graph
 
 function display_d3(){
 
-//d3.select("svg").remove();  
+//d3.select("svg").remove();
 //d3.selectAll("dot.circle").remove();
 //d3.selectAll("svg > *").remove();
 //svg.selectAll(".dot").remove();
@@ -190,9 +189,9 @@ svg.selectAll(".dot")
     .attr("cx", function(d, i) { return xScale(i) })
     .attr("cy", function(d) { return yScale(d.y) })
     .attr("r", 5);
-    
 
-//to add labels to the dots a this section had to be added 
+
+//to add labels to the dots a this section had to be added
 svg.selectAll(".dodo")
   .data(dataset)
  .enter().append("text")

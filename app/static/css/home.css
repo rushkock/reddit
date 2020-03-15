@@ -27,14 +27,14 @@ body {
 .axisRed line{
 	stroke: white;
   }
-  
+
   .axisRed path{
 	stroke: white;
   }
-  
+
   .axisRed text{
 	fill: white;
-  }  
+  }
 
 
   .dodo text {
@@ -43,11 +43,9 @@ body {
 }
 
 .grid line{
-	
+
     stroke: #fff;
 }
-
-
 
 
 .dropdown{
@@ -86,17 +84,7 @@ body {
   top: 700px;
 }
 
-.radarChart{
-  position: absolute;
-  left: 1500px;
-  top: 200px;
-}
 
-.lineChart{
-  position: absolute;
-  left: 1500px;
-  top: 200px;
-}
 
 .pole{
   fill: url(#mainGradient) #fff;
@@ -140,18 +128,40 @@ body {
   position: absolute;
   left: 0px;
   top: 0px;
+  overflow:hidden;
 }
 
-#myGraph{
-  overflow: scroll;
-  width: 600px;
-  height: 1000px;
-  background: transparent; 
+  .stats{
+    position: absolute;
+    left: 1450px;
+    top: 130px;
   }
+
+  .radarChart{
+    position: relative;
+    top: 20%;
+  }
+
+
+  .lineChart{
+    position: relative;
+    left: 10%;
+    top: 20%;
+  }
+
+  .w3-container{
+    margin-left: 20%;
+    margin-bottom: 10%;
+  }
+
 
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
 
+.half-button{
+  display: inline-block;
+  margin-right: 5%;
+}
 
 .mrng-60-top {
 	margin-top: 60px;
@@ -159,7 +169,7 @@ body {
 /* Global Button Styles */
 a.animated-button:link, a.animated-button:visited {
 	position: relative;
-  left: 1525px;
+  left: 0px;
   top: 0px;
 	display: block;
 	margin: 30px auto 0;

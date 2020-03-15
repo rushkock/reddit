@@ -67,14 +67,14 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
     <path
-       style="fill:#ffcc00;stroke:none;stroke-width:0.80103815px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#5abdde;stroke:none;stroke-width:0.80103815px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 68.244438,124.43175 21.903399,249.72073 c 7.08738,-23.04541 133.414791,-32.19603 154.861191,0 L 128.66378,124.95598 c -19.33151,9.93789 -39.523954,9.10425 -60.419342,-0.52423 z"
        id="path5217"
        class="beaker_water"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <ellipse
-       style="fill:#d4aa00;fill-opacity:1;stroke:none;stroke-width:1.17460334;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#56a4bd;fill-opacity:1;stroke:none;stroke-width:1.17460334;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path5222"
        class="beaker_circle_2"
        cx="99.522995"
@@ -82,7 +82,7 @@
        rx="76.521835"
        ry="18.904264" />
     <ellipse
-       style="fill:#ffdd55;fill-opacity:0.99497483;stroke:none;stroke-width:1.6329565;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#92e4ff;fill-opacity:0.99497483;stroke:none;stroke-width:1.6329565;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path5224"
        class="beaker_circle_1"
        cx="98.464813"
