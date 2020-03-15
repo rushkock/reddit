@@ -17,16 +17,13 @@ function renderChartCollapsibleNetwork(params) {
     nodeStroke: '#641e16',
     nodeTextColor: '#fffff0',
     linkColor: '#1f618d',
-    activeLinkColor: "#cb4335",
+    activeLinkColor: "#39ff14",
     hoverOpacity: 0.2,
     maxTextDisplayZoomLevel: 1,
     textDisplayed: true,
     lineStrokeWidth: 1.5,
     data: null
   };
-
-
-
 
   var attrKeys = Object.keys(attrs);
   attrKeys.forEach(function (key) {
@@ -234,9 +231,22 @@ function renderChartCollapsibleNetwork(params) {
         //node texts
         enteredNodes.append('text').attr('class', 'node-texts')
           .attr('x', 30).attr('fill', attrs.nodeTextColor)
-          .attr('opacity', 1)
+          .attr('opacity', 0.1)
           .text(d => d.data.name)
           .style('display', attrs.textDisplayed ? "initial" : "none")
+
+          //Change opacity
+
+          .on('mouseover', function (d, i) {
+          d3.select(this).transition()
+               .duration('50')
+               .attr('opacity', '.85')
+             })
+             .on('mouseout', function (d, i) {
+             d3.select(this).transition()
+                  .duration('20')
+                  .attr('opacity', '0.1');
+                })
 
 
         //channels grandchildren
@@ -437,7 +447,7 @@ function renderChartCollapsibleNetwork(params) {
                         // Start animation of second screen
 
                         start_animation(d.data.name)
-                      
+
                       }
                       d.children = d._children;
                       d._children = null;
