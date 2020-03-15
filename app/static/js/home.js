@@ -257,22 +257,47 @@ for (i=0;i<3;i++){
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////// DIFFERENT ANIMATIONS ///////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-
+function colors(toxicity){
+  // I have decided to hard code the colors in this way because of the 3 different shades
+  // beaker_circle_1 = Top circle
+  // beaker_circle_2 = Bottom circle
+  // beaker_water = middle water
+  if (toxicity < 0.1){
+    return {"beaker_circle_1":"#289960", "beaker_circle_2":"#086234", "beaker_water":"#08773f"}
+  }
+  else if (toxicity >= 0.1 && toxicity < 0.3){
+    return {"beaker_circle_1":"#84c969", "beaker_circle_2":"#31ac00", "beaker_water":"#4cb82e"}
+  }
+  else if (toxicity >= 0.3 && toxicity < 0.5){
+    return {"beaker_circle_1":"#c4df79", "beaker_circle_2":"#c4df79", "beaker_water":"#d2ec8a"}
+  }
+  else if (toxicity >= 0.5 && toxicity < 0.6){
+    return {"beaker_circle_1":"#ffea92", "beaker_circle_2":"#f1d14e", "beaker_water":"#ffe065"}
+  }
+  else if (toxicity >= 0.6 && toxicity < 0.7){
+    return {"beaker_circle_1":"#f5cc98", "beaker_circle_2":"#e8a24d", "beaker_water":"#fdbe70"}
+  }
+  else if (toxicity >= 0.7 && toxicity < 0.9){
+    return {"beaker_circle_1":"#ec9169", "beaker_circle_2":"#e86e37", "beaker_water":"#f57f4b"}
+  }
+  else{
+    return {"beaker_circle_1":"#bc3551", "beaker_circle_2":"#84152c", "beaker_water":"#a90426"}
+  }
+}
 
 function beaker(toxicity){
+
 // This function animates the main beaker
 // it changes the color based on toxicity
 // A human pops up displaying the toxicity
 
-var color = d3v5.scaleLinear()
-.domain([0.2, 0.3, 0.4, 0.5])
-.range(['#d73027', '#d73027',  '#a6d96a', '#66bd63', '#1a9850']);
+var color = colors(toxicity);
 
-var transition_2 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.6)
-var transition_3 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);})
-var transition_4 = d3v5.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", function () { return color(1-toxicity);}).style("fill-opacity", 0.8)
+var transition_2 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_1").transition().delay(1000).duration(4000).style("fill", () => color["beaker_circle_1"]);
+var transition_3 = d3v5.select('.beaker').select('svg').selectAll(".beaker_circle_2").transition().delay(1000).duration(4000).style("fill", () => color["beaker_circle_2"]);
+var transition_4 = d3v5.select('.beaker').select('svg').selectAll(".beaker_water").transition().delay(1000).duration(4000).style("fill", () => color["beaker_water"]);
 
-var transition_5 = d3v5.transition().delay(1000).on("start", bubbling)
+var transition_5 = d3v5.transition().delay(1000).on("start", bubbling(toxicity))
 
 var human_transition = d3v5.transition()
 .delay(5000)
@@ -574,21 +599,21 @@ t.on("start", function() {
                             test_tube_svg.selectAll(".test_tube2").transition().duration(600).style("fill-opacity", 0).end().then(function(){
                               test_tube_svg.selectAll(".test_tube0").transition().duration(300).style("fill-opacity", 1).end().then(function(){
                                 test_tube_svg.selectAll(".test_tube1").transition().duration(300).style("fill-opacity", 0)
-                              }).catch(function(e){console.log("Cancelled promise")})
-                            }).catch(function(e){console.log("Cancelled promise")})
-                          }).catch(function(e){console.log("Cancelled promise")})
-                        }).catch(function(e){console.log("Cancelled promise")})
-                      }).catch(function(e){console.log("Cancelled promise")})
-                    }).catch(function(e){console.log("Cancelled promise")})
-                  }).catch(function(e){console.log("Cancelled promise")})
-                }).catch(function(e){console.log("Cancelled promise")})
-              }).catch(function(e){console.log("Cancelled promise")})
-            }).catch(function(e){console.log("Cancelled promise")})
-          }).catch(function(e){console.log("Cancelled promise")})
-        }).catch(function(e){console.log("Cancelled promise")})
-      }).catch(function(e){console.log("Cancelled promise")})
-    }).catch(function(e){console.log("Cancelled promise")})
-  }).catch(function(e){console.log("Cancelled promise")})
+                              }).catch(function(e){console.log("Cancelled promise", e)})
+                            }).catch(function(e){console.log("Cancelled promise", e)})
+                          }).catch(function(e){console.log("Cancelled promise", e)})
+                        }).catch(function(e){console.log("Cancelled promise", e)})
+                      }).catch(function(e){console.log("Cancelled promise", e)})
+                    }).catch(function(e){console.log("Cancelled promise", e)})
+                  }).catch(function(e){console.log("Cancelled promise", e)})
+                }).catch(function(e){console.log("Cancelled promise", e)})
+              }).catch(function(e){console.log("Cancelled promise", e)})
+            }).catch(function(e){console.log("Cancelled promise", e)})
+          }).catch(function(e){console.log("Cancelled promise", e)})
+        }).catch(function(e){console.log("Cancelled promise", e)})
+      }).catch(function(e){console.log("Cancelled promise", e)})
+    }).catch(function(e){console.log("Cancelled promise", e)})
+  }).catch(function(e){console.log("Cancelled promise", e)})
 })
 }
 
@@ -658,7 +683,7 @@ svg.selectAll(".flyCircle")
 };
 
 
-function bubbling(){
+function bubbling(toxicity){
   // This functions creates the bubbles inside of the beaker
   // create data
   var data = [];
@@ -666,7 +691,7 @@ function bubbling(){
     data.push(i);
   }
 
-  var tcColours = ['#FDBB30'];
+  var tcColours = ['#42c1ff'];
   var randomTcColour = function() {
     return 0
   };
@@ -705,11 +730,15 @@ function bubbling(){
     .attr('fill', fill)
     .attr("stroke-width", 2)
     .style('stroke', fill)
+    .style('stroke-opacity', 0.5)
     .style("fill-opacity", opacity)
     .end();
 
     return Promise.race([transition_1]);
   }
+
+  var color = colors(toxicity);
+
 
   // Scale for radius
   var xr_1 = d3v5.scaleLinear().domain([0, 100]).range([0, 40]);
@@ -719,14 +748,14 @@ function bubbling(){
   }
   var positions_0 = generatePosition(positions_data_0)
   var opacity_0 = 0.5
-  var fill_0 = '#FDBB30'
+  var fill_0 = "#42c1ff"
 
   var positions_data_1 = {
-    minx1:120, maxx1:80, miny1:100, maxy1:200, opacity:0.3, color:'#FDBB30'
+    minx1:120, maxx1:80, miny1:100, maxy1:200, opacity:0.3
   }
   var positions_1 = generatePosition(positions_data_1)
-  var opacity_1 = 0.3
-  var fill_1 = '#93d422'
+  var opacity_1 = 0.1
+  var fill_1 = color["beaker_circle_1"]
 
   // Scale for radius
   var xr_2 = d3v5.scaleLinear().domain([0, 100]).range([0, 20]);
@@ -736,7 +765,7 @@ function bubbling(){
   }
   var positions_2 = generatePosition(positions_data_2)
   var opacity_2 = 0.1
-  var fill_2 = '#93d422'
+  var fill_2 = color["beaker_water"]
 
   var transitions = update(positions_0, xr_1, opacity_0, fill_0)
 
