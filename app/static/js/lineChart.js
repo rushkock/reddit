@@ -21,28 +21,32 @@ function addInputValues(subreddit,toxicity){
       //var txtToxicity = document.getElementById("txtToxicity").value;
       //var txtSubreddit = document.getElementById("txtSubreddit").value;
       // Displaying the value
-      if (arrSubreddits.length < 5) {
-        //window.arrSubreddits=[]
-        //window.arrToxicities=[]
 
-        if (arrSubreddits.includes(subreddit) == false ) {
+      if (arrSubreddits.length == 5) {
+        window.arrSubreddits=[]
+        window.arrToxicities=[]
+
+        //svg.selectAll("*").remove();
+        //d3.selectAll("circle").remove();
+        //d3.select("#lineChart").remove();
+        //d3.select("svg").remove();
+        //d3.select(".graph").selectAll("*").remove();
+      }
+
+      if (arrSubreddits.includes(subreddit) == false ) {
+
 
           arrSubreddits.push(subreddit);
           arrToxicities.push({'y':parseFloat(toxicity)});
           //arrToxicities.push({'y':parseFloat(txtToxicity)});
-          console.log(arrSubreddits);
-          console.log(arrToxicities);
+          //console.log(arrSubreddits);
+          //console.log(arrToxicities);
           //window.alert("inspect the console to see the data, now call the d3 stuff and update the data")
+
           arrBoth.push([{subreddit:subreddit},{toxicity:parseFloat(toxicity)}])
           console.log(arrBoth)
           }
-
           display_d3();
-
-      }
-
-
-
 
 }
 
@@ -83,9 +87,10 @@ var yScale = d3.scaleLinear()
 
 // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
 // Glen - need to change this to use arrToxicities instead of randomNumbers
-var dataset = arrToxicities;
+
+//var dataset = arrToxicities;
 //var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
-console.log(dataset)
+//console.log(dataset)
 //console.log(dataset2)
 
 // 1. Add the SVG to the page and employ #2
@@ -112,8 +117,9 @@ function display_d3(){
 
 //}
 
-var last_element = arrSubreddits[arrSubreddits.length-1];
+//var last_element = arrSubreddits[arrSubreddits.length-1];
 
+var dataset = arrToxicities;
 
 svg.selectAll("*").remove();
 
@@ -203,7 +209,7 @@ svg.append("g")
 d3.selectAll("path.line").remove();
 
 
-var last_element = arrSubreddits[arrSubreddits.length-1];
+//var last_element = arrSubreddits[arrSubreddits.length-1];
 
 // 7. d3's line generator
 var line = d3.line()

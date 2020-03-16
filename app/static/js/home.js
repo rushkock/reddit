@@ -121,11 +121,11 @@ var tracking_click = function(){}
 function move_images(toxicity, animation, tracking_click_f){
 tracking_click = tracking_click_f
 // make the background chemicals
-make_background()
+
 // draw the poles in the middle of screen
 draw_pole()
 // bubbles in the background
-background_bubbles()
+
 
 // Read the beaker SVG
 d3v5.xml('../static/images/beaker.svg')
@@ -892,7 +892,7 @@ function background_bubbles(){
   }
 
   var circles_0_a = make_circles(positions_data, data, color_0);
-  transition_2(circles_0_a);
+  //transition_2(circles_0_a);
 
   data = data.concat(data_1);
   var circles_0_b = make_circles(positions_data, data, color_0);
@@ -967,7 +967,7 @@ async function transition_1(circles, popped){
      transition_1(circles, popped);
   } catch(e) {
    // catches errors both in fetch and response.json
-   console.log("Cancelled promise")
+   console.log("Cancelled promise", e)
   }
 };
 

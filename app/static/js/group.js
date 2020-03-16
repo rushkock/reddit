@@ -1,5 +1,5 @@
 function renderChartCollapsibleNetwork(params) {
-  var tracking_click = false
+  var tracking_click = false;
   // exposed variables
   var attrs = {
     id: 'id' + Math.floor(Math.random() * 1000000),
@@ -144,7 +144,7 @@ function renderChartCollapsibleNetwork(params) {
 
       // flatten root
       var arr = flatten(hierarchy.root);
-      console.log(arr)
+
 
       // hide members based on their depth
       arr.forEach(d => {
@@ -424,7 +424,6 @@ function renderChartCollapsibleNetwork(params) {
                     else {
                       if (!d._children){
                         $('.radarChart').empty();
-                        $('.background').empty();
                         $('.cauldron').empty();
                         $('.test_tube').empty();
                         $('.beaker').empty();
@@ -515,7 +514,7 @@ function renderChartCollapsibleNetwork(params) {
             if (!node.cluster) {
               // if cluster coordinates are not set, set it
               node.cluster = { x: node.x, y: node.y }
-              console.log(node.depth)
+
             }
           }
           nodesArray.push(node);
