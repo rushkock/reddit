@@ -15,7 +15,7 @@ body {
 }
 
 .dot {
-    fill: #ff7300;
+    fill: #ffab00;
     stroke: #fff;
 }
 
@@ -105,6 +105,26 @@ body {
   --color-bot: #f7f7f7;
 }
 
+/* TOOLTIP */
+.tooltip {
+  line-height: 1.5;
+  font-weight: 1000;
+  font-family: "avenir next", Arial, sans-serif;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #FFA500;
+  border-radius: 1px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.d3-tip {
+  line-height: 1;
+  background: gainsboro;
+  border: 1px solid black;
+  font-size: 12px;
+  border-radius: 25px;
+}
 
 .chart{
   position: absolute;
@@ -241,7 +261,7 @@ a.animated-button.thar-three {
 	position: relative;
 	border: 2px solid #D24D57;
 	transition: all 0.4s cubic-bezier(0.42, 0, 0.58, 1);
-
+0s;
 }
 a.animated-button.thar-three:hover {
 	color: #000 !important;
