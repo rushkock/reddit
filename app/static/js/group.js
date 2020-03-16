@@ -72,8 +72,8 @@ function renderChartCollapsibleNetwork(params) {
       var force = {};
       force.link = d3.forceLink().id(d => d.id);
       force.charge = d3.forceManyBody().strength(-700)
-      force.center = d3.forceCenter(calc.chartWidth / 2, calc.chartHeight / 2)
-
+      //force.center = d3.forceCenter(calc.chartWidth / 2, calc.chartHeight / 2)
+      force.center = d3.forceCenter(320, 500)
 
       // prevent collide
       force.collide = d3.forceCollide().radius(d => {
