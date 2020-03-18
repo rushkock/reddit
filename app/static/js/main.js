@@ -18,7 +18,7 @@ function start_animation(subreddit, tracking_click_f){
   Promise.all(requests).then(function(response) {
      var toxicity = process_data_experiment(response, subreddit);
      var choose_animation_type = ["test_tube", "test_tube", "test_tube","", "round_beaker", ""]
-     move_images(toxicity, choose_animation_type[Math.floor(Math.random() * choose_animation_type.length)], tracking_click_f)
+     move_images(toxicity, choose_animation_type[Math.floor(Math.random() * choose_animation_type.length)], tracking_click_f, subreddit)
      addInputValues(subreddit,toxicity)
      draw_radarChart(subreddit)
   }).catch(function(e) {

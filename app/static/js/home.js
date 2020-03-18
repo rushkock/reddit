@@ -118,8 +118,10 @@ svg_pole_1.append('rect')
 ///////////////// MAIN FUNCTION TO MAKE ANIMATION  ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 var tracking_click = function(){}
-function move_images(toxicity, animation, tracking_click_f){
+var name_subreddit = ""
+function move_images(toxicity, animation, tracking_click_f, subreddit){
 tracking_click = tracking_click_f
+name_subreddit = subreddit
 // make the background chemicals
 
 // draw the poles in the middle of screen
@@ -347,7 +349,7 @@ d3v5.select(".human").select("svg").append("text")
 .attr("x", 50)
 .attr("y", 60)
 .attr("dy", ".15em")
-.text(function(d) { return toxicity.toFixed(2) * 100 + " %"; });
+.text(function(d) { return (parseFloat(toxicity) * 100).toFixed(2) + " %"; });
 
 d3v5.transition()
   .delay(8000)
