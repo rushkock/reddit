@@ -79,7 +79,7 @@ var ordinalScale = d3.scaleOrdinal()
 
 // 6. Y scale will use the randomly generate number
 var yScale = d3.scaleLinear()
-    .domain([0, 1.0]) // input
+    .domain([0, 1]) // input
     .range([height, 0]); // output
 
 
@@ -259,12 +259,7 @@ svg.append("path")
     }
   }
 
-  var tool_tip = d3.tip()
-      .attr("class", "d3-tip")
-      .offset([-220, -20])
-      .html("<div id='mySVGtooltip'></div>");
 
-svg.call(tool_tip);
 // 12. Appends a circle for each datapoint
 svg.selectAll(".dot")
     .data(dataset)
@@ -274,6 +269,12 @@ svg.selectAll(".dot")
     .attr("cy", function(d) { return yScale(d.y) })
     .attr("r", 5)
     .on('mouseover', function(d) {
+      var tool_tip = d3.tip()
+          .attr("class", "d3-tip")
+          .offset([60, -20])
+          .html("<div id='mySVGtooltip'></div>");
+
+    svg.call(tool_tip);
     tool_tip.show();
     d3v5.xml('../static/images/beaker.svg')
     .then(data => {
@@ -330,8 +331,8 @@ svg.selectAll(".dot")
           .style('opacity', 0.8)
           .style('stroke', 'white')
           .style('stroke-width', 0.3);
-    d3v5.select('#mySVGtooltip').select('svg').remove();
-  tool_tip.hide});
+    d3v5.select('#mySVGtooltip').remove();
+});
 
 
 
