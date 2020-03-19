@@ -79,7 +79,7 @@ var ordinalScale = d3.scaleOrdinal()
 
 // 6. Y scale will use the randomly generate number
 var yScale = d3.scaleLinear()
-    .domain([0, 0.5]) // input
+    .domain([0, 1.0]) // input
     .range([height, 0]); // output
 
 
