@@ -314,7 +314,7 @@ svg.selectAll(".dot")
         .attr("text-anchor", "middle")
         .attr("font-size", 25)
         .text(function() {
-          return "Toxicity: " + d.y.toFixed(2)*100 + " %";
+          return "Toxicity: " + (d.y*100).toFixed(2) + " %";
         });
 
         d3.select(this)
