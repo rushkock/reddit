@@ -72,6 +72,16 @@ Of note:
 - data issues - sentiment "vader" fields are on a different scale than "LIWC" data.  Will investigate using
   other LIWC fields for radar chart.  
   
+2020-03-11 - 2020-03-20 
+- priority for this week was incorporating the feedback from Gjorgji from last week's meeting, including:
+  - add line chart to show the user's toxicity story as they select 
+  - add buttons to show line/radar chart interchangeably
+  - animation changes within the brewing beaker section
+  - radar chart changes (LIWC data)
+  - network diagram finishing touches (glow, hierarchy, colour, icons)
+- also completed data cleanup exercises (removed subreddits with no 'source-subreddit' data, re-normalize the source subreddit set
+- worked on the report and video all week
+
 
 
 
