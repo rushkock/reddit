@@ -234,7 +234,7 @@ function renderChartCollapsibleNetwork(params) {
           .attr('opacity', 0.1)
           .text(d => d.data.name)
           .style('display', attrs.textDisplayed ? "initial" : "none")
-
+          .style('font-size', 16)
           //Change opacity
 
           .on('mouseover', function (d, i) {
@@ -384,6 +384,8 @@ function renderChartCollapsibleNetwork(params) {
           .filter(n => linkedNodes.indexOf(n.id) == -1)
           .attr('opacity', attrs.hoverOpacity);
 
+        node.select('text').style("opacity", 1)
+
         //reduce all other links opacity
         linksWrapper.selectAll('.link').attr('opacity', attrs.hoverOpacity);
 
@@ -402,7 +404,9 @@ function renderChartCollapsibleNetwork(params) {
           // return things back to normal
           nodesWrapper.selectAll('.node').attr('opacity', 1);
           linksWrapper.selectAll('.link').attr('opacity', 1).attr('stroke', attrs.linkColor)
+
         }
+        nodesWrapper.selectAll('text').style("opacity", 0.1)
 
       }
 
